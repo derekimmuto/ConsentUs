@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import Dashboard from './admin-dashboard'
 
 const App = () => {
-    return <p>Test</p>
+    return <Dashboard/>
 }
 
 ReactDOM.render(<App />, document.getElementById("app"))
