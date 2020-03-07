@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/derekimmuto/Consentsus#readme",
   "dependencies": {
+    "express": "^4.17.1",
+    "immuto-backend": "^0.1.8",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
   },
