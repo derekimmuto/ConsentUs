@@ -3,7 +3,8 @@ pragma solidity ^0.6.3;
 
 contract identityVerification{
     address owner;
-    address[] private patientAddresses;
+    event newPatientAdded(address patient, string message, uint expireTime);
+    event patientConsentExtend(address patient, string message, uint expireTime);
     
     struct patient {
         string message;
@@ -43,29 +44,22 @@ contract identityVerification{
     {
         patients[patientAddress].message = message;
         patients[patientAddress].expireTime = expireTime;
-        patientAddresses.push(msg.sender);
+        emit newPatientAdded(patientAddress,message,expireTime);
     }
     
-    function deleteUser(
-        address target, 
-        uint index
+    function extendConsent(
+        address patientAddress, 
+        string memory message,
+        bytes memory sig,
+        uint newTime
     ) 
         requireOwner
+        requireVerify (message, sig, patientAddress)
         public 
     {
-        delete patients[target];
-        delete patientAddresses[index];
-    }
-    
-    function getAllUsers() 
-        public 
-        view 
-        returns 
-    (
-        address[] memory
-    ) 
-    {
-        return patientAddresses;
+        patients[patientAddress].message = message;
+        patients[patientAddress].expireTime = newTime;
+        emit patientConsentExtend(patientAddress,message,newTime);
     }
     
     function getUserHash(
@@ -91,7 +85,7 @@ contract identityVerification{
         bool
     )
     {
-        return patients[target].expireTime < block.timestamp;
+        return patients[target].expireTime > block.timestamp;
     }
     
     function ecverify(
@@ -163,7 +157,9 @@ contract identityVerification{
     )
         internal
         pure
-        returns (string memory) 
+        returns (
+        string memory
+    ) 
     {
         bytes memory _tmp = new bytes(32);
         uint i;
