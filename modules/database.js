@@ -110,9 +110,9 @@ exports.get_user_info = (userEmail) => {
 }
 
 
-exports.add_trial = (userEmail, trialData) => {
+exports.add_trial = (trialData) => {
     return new Promise((resolve, reject) => {
-        let query = {email: userEmail}
+        let query = trialData
         DB.collection("trials").insertOne(query, (err, userInfo) => {
             if (err) {
                 reject(err)
