@@ -110,3 +110,69 @@ exports.get_user_info = (userEmail) => {
 }
 
 
+exports.add_trail = (userEmail, trialData) => {
+    return new Promise((resolve, reject) => {
+        let query = {email: userEmail}
+        DB.collection("trials").insertOne(query, (err, userInfo) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(userInfo)
+            }
+        })
+    })
+}
+
+exports.get_trails_for_user = (userEmail, trialData) => {
+    return new Promise((resolve, reject) => {
+        let query = {email: userEmail}
+        DB.collection("trials").find(query).toArray((err, array) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(array)
+            }
+        })
+    })
+}
+
+exports.add_patient_to_trial = (trialName, patientEmail) => {
+    return new Promise((resolve, reject) => {
+        let query = {trialName: trialName}
+        let update = { $push: {toConsent: patientEmail}}
+        DB.collection("trials").updateOne(query, update, (err, userInfo) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(userInfo)
+            }
+        })
+    })
+}
+
+exports.get_trials_for_patient = (patientEmail) => {
+    return new Promise((resolve, reject) => {
+        let query = { $or: [{toConsent: patientEmail}, {consented: patientEmail}] }
+        DB.collection("trials").find(query).toArray((err, array) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(array)
+            }
+        })
+    })
+}
+
+exports.grant_patient_consent_for_trial = (trialName, patientEmail) => {
+    return new Promise((resolve, reject) => {
+        let query = { $and: [{trialName: trialName}, {toConsent: patientEmail}]}
+        let updates = { $push: {consented: patientEmail}, $pull: {toConsent: patientEmail} }
+        DB.collection("trials").updateOne(query, updates, (err, userInfo) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(userInfo)
+            }
+        })
+    })
+}

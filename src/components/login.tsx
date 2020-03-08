@@ -15,7 +15,7 @@ const LoginForm = withRouter(({setUserType, history}) => (
     <div className="row center-row">
     <div className="col-2 col-lg-3"></div>
     <div className="col-8 col-lg-6 text-center rounded-border m-2">
-    <img id="loginLogo" className="text-white mb-4" src={bwlogo}></img>
+    <img id="loginLogo" className="text-white mb-4 px-0" src={bwlogo}></img>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
