@@ -12,129 +12,141 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import LoginForm from "./components/login"
 import Patient from "./components/patient"
 import Admin from "./components/admin"
+import AddTrial from "./components/addTrial"
 import OngoingConsent from "./components/ongoingConsent"
 import OurSideNav from "./components/ourSideNav"
 import RevokeConsent from "./components/revokeConsent"
+import PatientDashboard from "./components/patient-dashboard"
+import AddTrial from "./components/addTrial"
+import Trials from './components/trials'
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
 
 import homepageBackground from "./assets/homepage.png"
 import homepageLogo from "./assets/homepage_logo.png"
-import './css/main.css'; 
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+</style>
+import "./css/main.css"
 
 // Be sure to include styles at some point, probably during your bootstraping
-<<<<<<< HEAD
 import "@trendmicro/react-sidenav/dist/react-sidenav.css"
-=======
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-
-const OurSideNav = () => {
-  return (
-    <SideNav style={{backgroundColor: "#1092c5"}}
-      onSelect={selected => {
-        // Add your code here
-      }}
-    >
-      <SideNav.Toggle />
-      <SideNav.Nav defaultSelected="home">
-        <NavItem eventKey="home">
-          <NavIcon>
-            <i className="fa fa-fw fa-home" style={{ fontSize: "1.75em" }} />
-          </NavIcon>
-          <NavText>Home</NavText>
-        </NavItem>
-        <NavItem eventKey="charts">
-          <NavIcon>
-            <i
-              className="fa fa-fw fa-line-chart"
-              style={{ fontSize: "1.75em" }}
-            />
-          
-          </NavIcon>
-          <NavText>Charts</NavText>
-          <NavItem eventKey="charts/linechart">
-            <NavText>Line Chart</NavText>
-          </NavItem>
-          <NavItem eventKey="charts/barchart">
-            <NavText>Bar Chart</NavText>
-          </NavItem>
-        </NavItem>
-      </SideNav.Nav>
-    </SideNav>
-  );
-};
->>>>>>> 4aad05d43ff61c1609e0f91958e6c474901453d0
 
 const App = () => {
     const [userType, setUserType] = useState(null)
 
     let redirect = "/" + (userType ? userType : "")
 
-<<<<<<< HEAD
     return (
         <Router>
-            <OurSideNav></OurSideNav>
-            <div style={{ marginLeft: 64 }}>
-                <TopBar redirect={redirect} />
+            <div>
                 <Switch>
                     <Route exact path="/">
-                        <p>default</p>
-                        <Link to="/login">
-                            <button>hi</button>{" "}
-                        </Link>
+                        <div
+                            style={{
+                                backgroundImage:
+                                    "url(" + homepageBackground + ")",
+                                backgroundSize: "cover",
+                                height: "100vh",
+                                backgroundPosition: "center"
+                            }}
+                        >
+                            <img
+                                className="text-center"
+                                id="homepageLogo"
+                                src={homepageLogo}
+                                alt="Homepage Logo"
+                                onClick={() =>
+                                    (window.location.href = "/login")
+                                }
+                            ></img>
+                            <h1
+                                id="homepageTitle"
+                                className="text-white logo-font text-center fixed-bottom"
+                            >
+                                Simplifying and Securing Patient Consent
+                            </h1>
+                        </div>
                     </Route>
-                    <Route path="/login">
+                    <Route exact path="/login">
                         {() => <LoginForm setUserType={setUserType} />}
                     </Route>
-                    <Route path="/register">
+                    <Route exact path="/register">
                         {() => <LoginForm setUserType={setUserType} />}
                     </Route>
-                    <Route path="/admin">{() => <Admin />}</Route>
-                    <Route path="/patient">{() => <Patient />}</Route>
-                    <Route path="/revoke-consent">{() => <RevokeConsent studyName={"MyStudy"}/>}</Route>
-                    <Route path="/confirm-consent">{() => <ConfirmConsentGivent studyName={"MyStudy"}/>}</Route>
-                    <Route path="/ongoing-consent">
+                    <Route exact path="/admin">
+                        {() => (
+                            <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <Admin />
+                            </div>
+                        )}
+                    </Route>
+                    <Route exact path="/patient">
+                        {() => (
+                            <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <Patient />
+                            </div>
+                        )}
+                    </Route>
+
+                    <Route exact path="/revoke-consent">
+                        {() => <RevokeConsent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route exact path="/add-trial">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <AddTrial />
+                            </div>}
+                    </Route>
+<<<<<<< HEAD
+                    <Route path="/patient-dashboard">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <PatientDashboard />
+                            </div>}
+                    </Route>
+                    <Route path="/trials">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <Trials />
+                            </div>}
+                    </Route>
+                    <Route path="/confirm-consent">
+=======
+                    <Route exact path="/confirm-consent">
+>>>>>>> d9635f75a0bdc04a63b4d4cefe967c1ad0f0c28c
+                        {() => <ConfirmConsentGivent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route exact path="/ongoing-consent">
                         {() => <OngoingConsent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route exact path="/admin/add-new-trial">
+                        {() => <div style={{ marginLeft: 64 }}>
+                            <TopBar redirect={redirect} />
+                            <OurSideNav> userType={userType}></OurSideNav>
+                            <AddTrial />
+                        </div>} 
+                    </Route>
+                    <Route exact path="/admin/add-patients">
+                        {() => <div style={{marginLeft: 64}}>
+                            <TopBar redirect={redirect} />
+                            <OurSideNav> userType={userType}></OurSideNav>
+                            {/* <AddPatients /> */}
+                        </div> 
                     </Route>
                 </Switch>
             </div>
         </Router>
     )
 }
-=======
-  return (
-    <Router>
-      <div >
-        <Switch>
-          <Route exact path="/">
-            <div
-            style={{backgroundImage: "url(" + homepageBackground + ")", backgroundSize: "cover", height: "100vh", backgroundPosition: "center"}}>
-              <img className="text-center" id="homepageLogo" src={homepageLogo} alt="Homepage Logo" onClick={() => window.location.href = "/login"}  ></img>
-              <h1 id="homepageTitle" className="text-white text-center fixed-bottom">Simplifying and Securing Patient Consent</h1>
-            </div>
-          </Route>
-          <Route path="/login">
-              {() => <LoginForm setUserType={setUserType}/>}
-          </Route>
-          <Route path="/register">
-            {() => <LoginForm setUserType={setUserType} />}
-          </Route>
-          <Route path="/admin">
-            {() => 
-              <div style={{ marginLeft: 64 }}> 
-              <TopBar redirect={redirect} />
-              <OurSideNav></OurSideNav>
-              <Admin /></div>}
-          </Route>
-          <Route path="/patient">{() => <div style={{ marginLeft: 64 }}> 
-            <TopBar redirect={redirect} />
-            <OurSideNav></OurSideNav><Patient />
-            </div>}</Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-};
->>>>>>> 4aad05d43ff61c1609e0f91958e6c474901453d0
-
 ReactDOM.render(<App></App>, document.getElementById("app"))

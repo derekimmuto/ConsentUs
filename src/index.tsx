@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import LoginForm from "./components/login"
 import Patient from "./components/patient"
 import Admin from "./components/admin"
+import AddTrial from "./components/addTrial"
 import OngoingConsent from "./components/ongoingConsent"
 import OurSideNav from "./components/ourSideNav"
 import RevokeConsent from "./components/revokeConsent"
@@ -24,7 +25,7 @@ import immuto from "immuto-backend"
 import homepageBackground from "./assets/homepage.png"
 import homepageLogo from "./assets/homepage_logo.png"
 <style>
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 </style>
 import "./css/main.css"
 
@@ -67,13 +68,13 @@ const App = () => {
                             </h1>
                         </div>
                     </Route>
-                    <Route path="/login">
+                    <Route exact path="/login">
                         {() => <LoginForm setUserType={setUserType} />}
                     </Route>
-                    <Route path="/register">
+                    <Route exact path="/register">
                         {() => <LoginForm setUserType={setUserType} />}
                     </Route>
-                    <Route path="/admin">
+                    <Route exact path="/admin">
                         {() => (
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
@@ -82,7 +83,7 @@ const App = () => {
                             </div>
                         )}
                     </Route>
-                    <Route path="/patient">
+                    <Route exact path="/patient">
                         {() => (
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
@@ -92,10 +93,10 @@ const App = () => {
                         )}
                     </Route>
 
-                    <Route path="/revoke-consent">
+                    <Route exact path="/revoke-consent">
                         {() => <RevokeConsent studyName={"MyStudy"} />}
                     </Route>
-                    <Route path="/add-trial">
+                    <Route exact path="/add-trial">
                         
                         {() => <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
@@ -103,32 +104,29 @@ const App = () => {
                                 <AddTrial />
                             </div>}
                     </Route>
-                    <Route path="/patient-dashboard">
-                        
-                        {() => <div style={{ marginLeft: 64 }}>
-                                <TopBar redirect={redirect} />
-                                <OurSideNav userType={userType}></OurSideNav>
-                                <PatientDashboard />
-                            </div>}
-                    </Route>
-                    <Route path="/trials">
-                        
-                        {() => <div style={{ marginLeft: 64 }}>
-                                <TopBar redirect={redirect} />
-                                <OurSideNav userType={userType}></OurSideNav>
-                                <Trials />
-                            </div>}
-                    </Route>
-                    <Route path="/confirm-consent">
+                    <Route exact path="/confirm-consent">
                         {() => <ConfirmConsentGivent studyName={"MyStudy"} />}
                     </Route>
-                    <Route path="/ongoing-consent">
+                    <Route exact path="/ongoing-consent">
                         {() => <OngoingConsent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route exact path="/admin/add-new-trial">
+                        {() => <div style={{ marginLeft: 64 }}>
+                            <TopBar redirect={redirect} />
+                            <OurSideNav> userType={userType}></OurSideNav>
+                            <AddTrial />
+                        </div>} 
+                    </Route>
+                    <Route exact path="/admin/add-patients">
+                        {() => <div style={{marginLeft: 64}}>
+                            <TopBar redirect={redirect} />
+                            <OurSideNav> userType={userType}></OurSideNav>
+                            {/* <AddPatients /> */}
+                        </div> 
                     </Route>
                 </Switch>
             </div>
         </Router>
     )
 }
-
 ReactDOM.render(<App></App>, document.getElementById("app"))

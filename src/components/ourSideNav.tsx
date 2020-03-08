@@ -50,6 +50,12 @@ const OurSideNav = (userType) => {
             </NavIcon>
             <NavText>Dashboard</NavText>
           </NavItem>
+          <NavItem eventKey="trials">
+            <NavIcon>
+            <a href="/trials"><i className="fas fa-fw fa-vials" style={{ fontSize: "1.75em" }} /></a>
+            </NavIcon>
+            <NavText>Trials</NavText>
+          </NavItem>
           <NavItem eventKey="patientData">
             <NavIcon>
             <a href="/trials"><i className="fas fa-fw fa-vials" style={{ fontSize: "1.75em" }} /></a>

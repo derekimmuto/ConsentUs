@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { Link, useRouteMatch, Switch, Route } from "react-router-dom"
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap"
+import AddTrial from "./addTrial"
+
 import TableView from './tableView'
 
 const Admin = () => {
@@ -32,13 +34,16 @@ const Admin = () => {
         <Container className="m-5">
             <Row>
                 <TableView
+                    
+                    title={<div style={{display: "inline-flex"}}>Trials<CellLink to="/admin/add-new-trial">Add a new trial</CellLink></div>}
                     headings={["Sponsor", "Subjects"]}
                     rows={trials.map(trial => [
                         trial.sponsor,
                         trial.subjects.length
                     ])}
-                ></TableView>
+                    ></TableView>
                 <TableView
+                    title="Patients:"
                     headings={["Sponsor", "Subjects"]}
                     rows={trials.map(trial => [
                         trial.sponsor,
@@ -47,6 +52,7 @@ const Admin = () => {
                 ></TableView>
 
                 <TableView
+                    title="Documents:"
                     headings={["Sponsor", "Subjects"]}
                     rows={trials.map(trial => [
                         trial.sponsor,
@@ -72,7 +78,7 @@ const Admin = () => {
             <Row>
                 <Switch>
                     {[
-                        { end: "/trials", Comp: () => <p>trials</p> },
+                        { end: "/add-new-trial", Comp: () => <p>ADD TRIAL!!!!</p> },
                         { end: "/patients", Comp: () => <p>patients</p> },
                         {
                             end: "/view-document",
