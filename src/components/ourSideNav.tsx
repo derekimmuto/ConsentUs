@@ -10,7 +10,7 @@ import SideNav, {
 const OurSideNav = (userType) => {
   if (userType === "patient") {
     return (
-      <SideNav style={{backgroundColor: "#1085b8"}}
+      <SideNav style={{backgroundColor: "#006195"}}
         onSelect={selected => {
           // Add your code here
         }}

@@ -20,6 +20,9 @@ import immuto from "immuto-backend"
 
 import homepageBackground from "./assets/homepage.png"
 import homepageLogo from "./assets/homepage_logo.png"
+<style>
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+</style>
 import "./css/main.css"
 
 // Be sure to include styles at some point, probably during your bootstraping
@@ -55,7 +58,7 @@ const App = () => {
                             ></img>
                             <h1
                                 id="homepageTitle"
-                                className="text-white text-center fixed-bottom"
+                                className="text-white logo-font text-center fixed-bottom"
                             >
                                 Simplifying and Securing Patient Consent
                             </h1>
