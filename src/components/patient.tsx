@@ -16,7 +16,8 @@ const PatientTrial = ({trials}) => {
             <Card.Body>
                 <Card.Title></Card.Title>
                 <Card.Text>
-                    <div>Hi</div>
+                    <div>Yet to consent to study.</div>
+                    {JSON.stringify(PatientTrialInfo, null, 2)}
                 </Card.Text>
                 <Button href="/ongoing-consent" variant="primary">View Agreement Information</Button> 
             </Card.Body>
