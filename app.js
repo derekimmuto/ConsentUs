@@ -147,7 +147,11 @@ app.post("/login-user", (req, res) => {
             auth
               .create_user_session(req.body.authToken, userInfo, res)
               .then(() => {
-                res.status(200).json({ userType: "patient" });
+                if (userInfo.email == "immuto.test@gmail.com") {
+                  res.status(200).json({ userType: "admin" });
+                } else {
+                  res.status(200).json({ userType: "patient" });
+                }
               })
               .catch(err => {
                 console.error(err);
