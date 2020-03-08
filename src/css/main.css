@@ -21,16 +21,25 @@
 .full-page {
     height: 100vh;
 }
-
-.center-in-page {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .rounded-border {
     border-color: white;
-    border-width: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    padding-bottom: 70px;
 }
+
+#loginLogo {
+    width: 90% ;
+}
+
+.center-row {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
