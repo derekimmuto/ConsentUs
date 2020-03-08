@@ -15,6 +15,7 @@ import Admin from "./components/admin"
 import OngoingConsent from "./components/ongoingConsent"
 import OurSideNav from "./components/ourSideNav"
 import RevokeConsent from "./components/revokeConsent"
+import AddTrial from "./components/addTrial"
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
 
@@ -91,6 +92,14 @@ const App = () => {
 
                     <Route path="/revoke-consent">
                         {() => <RevokeConsent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route path="/add-trial">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <AddTrial />
+                            </div>}
                     </Route>
                     <Route path="/confirm-consent">
                         {() => <ConfirmConsentGivent studyName={"MyStudy"} />}

@@ -5,6 +5,9 @@ var bodyParser = require("body-parser");
 var immuto = require("immuto-backend");
 var cors = require("cors");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const fileUpload = require('express-fileupload');
+const crypto = require('crypto')
+
 
 /* Project Modules */
 var auth = require(path.join(__dirname, "modules", "authentication.js"));
@@ -130,9 +133,29 @@ app.post("/create-trial", (req, res) => {
         }
   
         // VALIDATE THIS
-        let trialInfo = req.body
-        trialInfo.toConsent = []
-        trialInfo.consented = []
+        let trialInfo = {
+          "sponsor": req.body.sponsor,
+          "trialName": req.body.trialName,
+          "toConsent": [],
+          "consented": []
+        }
+        
+
+        if (!req.files || Object.keys(req.files).length === 0) {
+          return res.status(400).send('No files were uploaded.');
+        }
+      
+        let file = req.files.file;
+        let filePath = "./files/" + crypto.randomBytes(16) + filename
+
+        trialInfo.filePath = filePath
+
+        sampleFile.mv(filePath, function(err) {
+          if (err)
+            return res.status(500).send(err);
+      
+          res.send('File uploaded!');
+        });
 
         DB.get_user_info(userInfo.email)
         .then(consentusInfo => {
