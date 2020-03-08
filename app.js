@@ -142,16 +142,12 @@ app.post("/login-user", (req, res) => {
 
       // only accept Immuto accounts associated with Metrodora
       DB.get_user_info(userInfo.email)
-        .then(consentsusInfo => {
-          if (consentsusInfo) {
+        .then(consentusInfo => {
+          if (consentusInfo) {
             auth
               .create_user_session(req.body.authToken, userInfo, res)
               .then(() => {
-                if (userInfo.email == "immuto.test@gmail.com") {
-                  res.status(200).json({ userType: "admin" });
-                } else {
-                  res.status(200).json({ userType: "patient" });
-                }
+                res.status(200).json({ userType: consentusInfo.userType });
               })
               .catch(err => {
                 console.error(err);
