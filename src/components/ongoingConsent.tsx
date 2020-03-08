@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import React, { Component, useEffect } from "react"
+import axios from 'axios';
 import { withRouter } from "react-router-dom"
 import {
     Container,
@@ -16,7 +17,9 @@ export const im = immuto.init(true, "https://dev.immuto.io")
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const OngoingConsent = withRouter(({ studyName }) => (
+const OngoingConsent = withRouter(({ studyName }) => {
+    useEffect(download, [])
+return (
     <div>
         <h1>{studyName}</h1>
         <Formik
@@ -46,7 +49,7 @@ const OngoingConsent = withRouter(({ studyName }) => (
                     <form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
-                            <Document file={{url: "http://www.pdf995.com/samples/pdf.pdf"}}
+                                <Document file={{url: "http://www.pdf995.com/samples/pdf.pdf"}}
                                 onLoadError={console.error} />                            
                             </Col>
                         </Row>
@@ -87,7 +90,7 @@ const OngoingConsent = withRouter(({ studyName }) => (
             )}
         </Formik>
     </div>
-))
+))}
 
 function handleForm(consent, termsConditions, fullName) {
     if (consent && termsConditions) {
@@ -98,6 +101,23 @@ function handleForm(consent, termsConditions, fullName) {
         alert("inadiquate consent")
     }
 }
+
+function download() {
+    this.serverRequest = 
+      axios
+        .get("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")
+        .then(function(result) {    
+            console.log(result)
+            let im = Immuto.init(true, "https://dev.immuto.io")
+            let user_pwd = "12345"
+            let user_email = "user@user.io"
+            im.create_digital_agreement(result, "consent form", "single_sign", usr_pwd, [user_email])
+                .then((recordID) => 
+        //   _this.setState({
+        //     jobs: result.data.jobs
+        //   });
+        })
+  }
 
 export default OngoingConsent;
 
