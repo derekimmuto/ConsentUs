@@ -1,5 +1,7 @@
 import React, { Component } from "react"
+import axios from "axios"
 import { withRouter } from "react-router-dom"
+import Immuto from "immuto-backend"
 import {
     Container,
     Row,
@@ -46,7 +48,7 @@ const OngoingConsent = withRouter(({ studyName }) => (
                     <form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
-                            <Document file={{url: "http://www.pdf995.com/samples/pdf.pdf"}}
+                            <Document file={{url: "http://consentus.herokuapp.com/7cb0efbb93d4Informed%20Consent%20PDF.pdf"}}
                                 onLoadError={console.error} />                            
                             </Col>
                         </Row>
@@ -97,6 +99,10 @@ function handleForm(consent, termsConditions, fullName) {
     } else {
         alert("inadiquate consent")
     }
+}
+
+function download() {
+   
 }
 
 export default OngoingConsent;
