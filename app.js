@@ -28,91 +28,12 @@ app.use(cors()); // DELETE ME IN PROD
 
 /******************************* Website Pages ********************************/
 app.get("/", (req, res) => {
+  // update this to reflect the build
   res.sendFile(path.join(__dirname, "static", "html", "index.html"));
 });
 
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "html", "register.html"));
-});
+/* Optional Middleware */
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "html", "login.html"));
-});
-
-app.get("/logout", (req, res) => {
-  auth
-    .end_user_session(req)
-    .then(() => {
-      res.redirect("/login");
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
-
-app.post("/logout", (req, res) => {
-    console.log("logout post")
-    auth
-      .end_user_session(req)
-      .then(() => {
-        res.status(204).end()
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).end();
-      });
-});
-
-app.get("/dashboard", (req, res) => {
-  auth
-    .user_logged_in(req)
-    .then(userInfo => {
-      if (userInfo) {
-        res.sendFile(path.join(__dirname, "static", "html", "dashboard.html"));
-      } else {
-        res.redirect("/login");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
-
-app.get("/tables", (req, res) => {
-  auth
-    .user_logged_in(req)
-    .then(userInfo => {
-      if (userInfo) {
-        res.sendFile(path.join(__dirname, "static", "html", "tables.html"));
-      } else {
-        res.redirect("/login");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
-
-app.get("/file-upload", (req, res) => {
-  auth
-    .user_logged_in(req)
-    .then(userInfo => {
-      if (userInfo) {
-        res.sendFile(
-          path.join(__dirname, "static", "html", "file_upload.html")
-        );
-      } else {
-        res.redirect("/login");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    });
-});
 
 /************************************ API *************************************/
 app.post("/register-org-user", (req, res) => {
@@ -185,6 +106,172 @@ app.post("/login-user", (req, res) => {
       }
     });
 });
+
+app.post("/logout", (req, res) => {
+    console.log("logout post")
+    auth
+      .end_user_session(req)
+      .then(() => {
+        res.status(204).end()
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).end();
+      });
+});
+
+app.post("/create-trial", (req, res) => {
+    auth
+    .user_logged_in(req)
+    .then(userInfo => {
+        if (!userInfo) {
+          res.status(403).end();
+          return;
+        }
+  
+        // VALIDATE THIS
+        let trialInfo = req.body
+        trialInfo.toConsent = []
+        trialInfo.consented = []
+
+        DB.get_user_info(userInfo.email)
+        .then(consentusInfo => {
+        if (consentusInfo && consentusInfo.userType === "admin") {
+            DB.add_trial(userInfo.email, trialInfo).then(() => {
+                res.status(204).end()
+            }).catch((err) => {
+                console.error(err)
+                res.status(500).end()
+            })
+        } else {
+            res
+            .status(403)
+            .end("Must be an admin to use this endpoint.");
+        }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
+    }).catch((err) => {
+        console.error(err)
+        res.status(500).end();
+    })
+})
+
+app.get("/trials-for-admin", (req, res) => {
+    auth
+    .user_logged_in(req)
+    .then(userInfo => {
+        if (!userInfo) {
+          res.status(403).end();
+          return;
+        }
+
+        DB.get_user_info(userInfo.email)
+        .then(consentusInfo => {
+        if (consentusInfo && consentusInfo.userType === "admin") {
+            DB.get_trials_for_user(userInfo.email).then((trials) => {
+                res.status(200).json(trials)
+            }).catch((err) => {
+                console.error(err)
+                res.status(500).end()
+            })
+        } else {
+            res
+            .status(403)
+            .end("Must be an admin to use this endpoint.");
+        }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
+    }).catch((err) => {
+        console.error(err)
+        res.status(500).end();
+    })
+})
+
+app.post("/add-patient-to-trial", (req, res) => {
+    auth
+    .user_logged_in(req)
+    .then(userInfo => {
+        if (!userInfo) {
+          res.status(403).end();
+          return;
+        }
+  
+        // VALIDATE THIS
+        let trialName = req.body.trialName
+        let patientInfo = req.body.patientInfo
+
+        DB.get_user_info(userInfo.email)
+        .then(consentusInfo => {
+        if (consentusInfo && consentusInfo.userType === "admin") {
+            DB.add_patient_to_trial(trialName, patientInfo).then(() => {
+                res.status(204).end()
+            }).catch((err) => {
+                console.error(err)
+                res.status(500).end()
+            })
+        } else {
+            res
+            .status(403)
+            .end("Must be an admin to use this endpoint.");
+        }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
+    }).catch((err) => {
+        console.error(err)
+        res.status(500).end();
+    })
+})
+
+app.get("/get-trials-for-patient", (req, res) => {
+    auth
+    .user_logged_in(req)
+    .then(userInfo => {
+        if (!userInfo) {
+          res.status(403).end();
+          return;
+        }
+
+        DB.get_user_info(userInfo.email)
+        .then(consentusInfo => {
+        if (consentusInfo && consentusInfo.userType === "patient") {
+            DB.get_trials_for_patient(userInfo.email).then((trials) => {
+                res.status(200).json(trials)
+            }).catch((err) => {
+                console.error(err)
+                res.status(500).end()
+            })
+        } else {
+            res
+            .status(403)
+            .end("Must be an patient to use this endpoint.");
+        }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).end();
+        });
+    }).catch((err) => {
+        console.error(err)
+        res.status(500).end();
+    })
+})
+
+
+
+
+
+
+
+
 
 /* APP Middleware */
 app.use(function(req, res, next) {
