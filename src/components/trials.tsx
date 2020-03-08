@@ -14,7 +14,7 @@ class Trials extends React.Component {
     componentDidMount() {
         axios.get(URL + '/trials-for-admin?authToken=' + window.localStorage.authToken) 
         .then(res => {
-            
+            console.log(res.data)
             this.setState({
                 trials: res.data
             });
@@ -33,28 +33,25 @@ class Trials extends React.Component {
 
 
 const Trial = (props) => {
-    return (
-            <Card>
+    let trialsInfo = props.props
+
+    let items = []
+    for (let trialInfo of trialsInfo) {
+        items.push(
+            <Card key={trialInfo._id} className="mx-4">
             <Card.Body>
                 <Card.Title></Card.Title>
                 <Card.Text>
-                    {props.props[0].trialName}
+                    {trialInfo.trialName}
                 </Card.Text>
                 <Button href="google.com" variant="primary"></Button> 
             </Card.Body>
             </Card>
-    )}
-    else {
-        return <Card>
-        <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text>
-                {"No data yet"}
-            </Card.Text>
-            <Button href="google.com" variant="primary">{"Nonnnne"}</Button> 
-        </Card.Body>
-        </Card>
+        )
     }
+    return (
+        items
+    )
 }
 
 export default Trials;

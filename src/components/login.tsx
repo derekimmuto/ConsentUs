@@ -105,6 +105,7 @@ function handleForm(email, password, history, setUserType) {
         window.localStorage.authToken = authToken
         create_user_session(authToken).then((r: {userType: string}) => {
           let userType = ((r.userType && r.userType !== undefined)? r.userType : 'admin')
+          window.localStorage.userType = userType
           setUserType(userType)
           history.push("/" + userType)
         }).catch((err) => {

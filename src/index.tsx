@@ -92,6 +92,15 @@ const App = () => {
                             </div>
                         )}
                     </Route>
+                    <Route exact path="/patient-viewer">
+                        {() => (
+                            <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <PatientViewer />
+                            </div>
+                        )}
+                    </Route>
 
                     <Route exact path="/revoke-consent">
                         {() => <RevokeConsent studyName={"MyStudy"} />}
@@ -104,25 +113,19 @@ const App = () => {
                                 <AddTrial />
                             </div>}
                     </Route>
+                    <Route exact path="/trials">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                {<Trials/>}
+                            </div>}
+                    </Route>
                     <Route exact path="/confirm-consent">
                         {() => <ConfirmConsentGivent studyName={"MyStudy"} />}
                     </Route>
                     <Route exact path="/ongoing-consent">
                         {() => <OngoingConsent studyName={"MyStudy"} />}
-                    </Route>
-                    <Route exact path="/admin/add-new-trial">
-                        {() => <div style={{ marginLeft: 64 }}>
-                            <TopBar redirect={redirect} />
-                            <OurSideNav> userType={userType}></OurSideNav>
-                            <AddTrial />
-                        </div>} 
-                    </Route>
-                    <Route exact path="/admin/add-patients">
-                        {() => <div style={{marginLeft: 64}}>
-                            <TopBar redirect={redirect} />
-                            <OurSideNav> userType={userType}></OurSideNav>
-                            {/* <AddPatients /> */}
-                        </div> 
                     </Route>
                 </Switch>
             </div>

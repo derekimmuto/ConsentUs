@@ -11,7 +11,7 @@ let URL = "http://consentus.herokuapp.com"
 
 
 const OurSideNav = (userType) => {
-  if (userType === "patient" || window.location.href.includes("patient")) {
+  if (window.localStorage.userType === "patient") {
     return (
       <SideNav style={{backgroundColor: "#006195"}}
         onSelect={selected => {
@@ -56,11 +56,11 @@ const OurSideNav = (userType) => {
             </NavIcon>
             <NavText>Trials</NavText>
           </NavItem>
-          <NavItem eventKey="patientData">
+          <NavItem eventKey="patient-viewer">
             <NavIcon>
-            <a href="/trials"><i className="fas fa-fw fa-vials" style={{ fontSize: "1.75em" }} /></a>
+            <a href="/patient-viewer"><i className="fas fa-fw fa-users" style={{ fontSize: "1.75em" }} /></a>
             </NavIcon>
-            <NavText>Trials</NavText>
+            <NavText>Patients</NavText>
           </NavItem>
         </SideNav.Nav>
       </SideNav>
