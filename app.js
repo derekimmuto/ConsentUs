@@ -145,6 +145,7 @@ app.post("/create-trial", (req, res) => {
         let trialInfo = {
           "sponsor": req.body.sponsor,
           "trialName": req.body.trialName,
+          "admin": userInfo.email,
           "toConsent": [],
           "consented": []
         }
@@ -262,7 +263,7 @@ app.post("/add-patient-to-trial", (req, res) => {
     })
 })
 
-app.get("/get-trials-for-patient", (req, res) => {
+app.get("/trials-for-patient", (req, res) => {
     auth
     .user_logged_in(req)
     .then(userInfo => {
