@@ -60,7 +60,7 @@ const Admin = () => {
                     ])}
                 ></TableView>
             </Row>
-            <Row className="mb-5">
+            {/* <Row className="mb-5">
                 <Col>
                     <Card style={{ width: "18rem" }}>
                         <Card.Body>
@@ -90,7 +90,7 @@ const Admin = () => {
                         </Route>
                     ))}
                 </Switch>
-            </Row>
+            </Row> */}
         </Container>
     )
 }
