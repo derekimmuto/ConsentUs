@@ -115,4 +115,4 @@ function create_user_session(authToken) {
     })
 }
 
-export default LoginForm;
+export default;

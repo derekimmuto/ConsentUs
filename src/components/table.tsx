@@ -11,20 +11,16 @@ var example_Rows = [{name: 'Kostas', email: 'kostas@kostas.io', status: 'OK'},
 ]
 
 const Table = ({rows, cols}) => {
-    const cols =  [
-        { headerName: "Name",   field: "name", sortable: true },
-        { headerName: "Email",  field: "email", sortable: true },
-        { headerName: "Status", field: "status", sortable: true, cellRenderer: MyCellRenderer},
-    ]
     return (
         <div className="ag-theme-balham" style={{width: '100%', height: '100%'}}>
-            <AgGridReact
+            {<AgGridReact
                 columnDefs={cols}
                 rowData={rows}>
-            </AgGridReact>
+            </AgGridReact> } 
         </div>
     )
 }
+
 
 function MyCellRenderer () {}
 
@@ -39,3 +35,5 @@ MyCellRenderer.prototype.init = function(link) {
 MyCellRenderer.prototype.getGui = function() {
     return this.eGui;
 };
+
+export default Table;

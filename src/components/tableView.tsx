@@ -1,11 +1,11 @@
 import React from 'react'
 import {Col, Card, Table} from 'react-bootstrap'
 
-const TableView = ({ headings, rows }) => (
+const TableView = ({title, headings, rows }) => (
     <Col>
         <Card>
             <Card.Body>
-                <Card.Title >Active Trials: {rows.length}</Card.Title>
+                <Card.Title >{title} {rows.length}</Card.Title>
                 {/* <div className="mb-:"/> */}
                 <Table striped={true} bordered={false}>
                     <thead>
@@ -30,4 +30,4 @@ const TableView = ({ headings, rows }) => (
     </Col>
 )
 
-export default TableView
+export default TableView;
