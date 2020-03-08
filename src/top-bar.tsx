@@ -13,7 +13,6 @@ import {
 import logo from "./assets/left-logo.png"; // this is fine
 
 const TopBar = ({ redirect }) => {
-  console.log(redirect);
   return (
     <Navbar className="" bg="light">
       <Navbar.Brand href={redirect}>
