@@ -10,17 +10,16 @@ import {
 import TopBar from "./top-bar"
 import "bootstrap/dist/css/bootstrap.min.css"
 import LoginForm from "./components/login"
-import Patient from "./components/patient"
+import PatientTrial from "./components/patient"
 import Admin from "./components/admin"
-import AddTrial from "./components/addTrial"
 import OngoingConsent from "./components/ongoingConsent"
 import OurSideNav from "./components/ourSideNav"
 import RevokeConsent from "./components/revokeConsent"
 import PatientDashboard from "./components/patient-dashboard"
 import AddTrial from "./components/addTrial"
-import Trials from './components/trials'
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
+import Trials from "./components/trials"
 
 import homepageBackground from "./assets/homepage.png"
 import homepageLogo from "./assets/homepage_logo.png"
@@ -88,7 +87,7 @@ const App = () => {
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
                                 <OurSideNav userType={userType}></OurSideNav>
-                                <Patient />
+                                <PatientTrial />
                             </div>
                         )}
                     </Route>

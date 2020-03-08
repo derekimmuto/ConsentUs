@@ -19,7 +19,7 @@ const TopBar = ({ redirect }) => {
   return (
     <Navbar id='navbarTop' bg="light">
       <Navbar.Brand href={redirect}>
-        <img src={logo} alt="ConsentUs logo" height="39" className='m-0 p-0'></img>
+        <img id="navbarLogo" src={logo} alt="ConsentUs logo" height="39" className='m-0 p-0'></img>
       </Navbar.Brand>
       <NavItem id="logoutButton" className="ml-auto semi-bold"><NavLink onClick={logoutUser} className="color-primary hover-secondary">Logout</NavLink></NavItem>
     </Navbar>

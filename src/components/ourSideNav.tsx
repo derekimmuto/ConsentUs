@@ -28,22 +28,29 @@ const OurSideNav = (userType) => {
           </NavItem>
           <NavItem eventKey="profile">
             <NavIcon>
-              <i className="fas fa-fw fa-diagnoses" style={{ fontSize: "1.75em" }} />
+            <a href="/patient"><i className="fas fa-fw fa-diagnoses" style={{ fontSize: "1.75em" }} /></a>
             </NavIcon>
-            <NavText>Profile</NavText>
+            <NavText>Trials</NavText>
           </NavItem>
         </SideNav.Nav>
       </SideNav>
     );
   } else {
+    let page = window.location.href.split('/').pop()
+    let selectedLookup = {
+      "admin": "dashboard",
+      "patient": "dashboard",
+      "trials": "trials"
+    }
+    let selected = selectedLookup[page]
     return (
       <SideNav style={{backgroundColor: "#1085b8"}}
         onSelect={selected => {
           // Add your code here
         }}
-      >
+      > 
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="dashboard">
+        <SideNav.Nav defaultSelected={selected}>
           <NavItem eventKey="dashboard">
             <NavIcon>
               <a href="/admin"><i className="fa fa-fw fa-tachometer-alt" style={{ fontSize: "1.75em" }} /></a>

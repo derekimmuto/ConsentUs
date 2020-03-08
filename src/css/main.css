@@ -24,6 +24,18 @@
     border-color: #ababab
 }
 
+.card-shadow {
+    box-shadow: 0 2px 10px -10px rgba(0,0,0,.4);
+}
+
+#navbarLogo {
+    opacity: .80;
+}
+
+#navbarLogo:hover {
+    opacity: 1.0;
+}
+
 #logoutButton:hover {
     background-color: #dfdfdf !important;
 }

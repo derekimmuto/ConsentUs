@@ -24,13 +24,12 @@ class Trials extends React.Component {
     render() {
         return (
             <div>
-                <h4>Trials</h4>
+                <h4 className="ml-4 my-3">Trials</h4>
                 <Trial props={this.state.trials}/>  
             </div>
         )
     }
 }
-
 
 const Trial = (props) => {
     let trialsInfo = props.props
@@ -38,8 +37,8 @@ const Trial = (props) => {
     let items = []
     for (let trialInfo of trialsInfo) {
         items.push(
-            <Card key={trialInfo._id} className="mx-4">
-            <Card.Body>
+            <Card key={trialInfo._id} className="mx-4 mt-3 shadow rounded">
+            <Card.Body >
                 <Card.Title></Card.Title>
                 <Card.Text>
                     {trialInfo.trialName}
