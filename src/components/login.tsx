@@ -81,7 +81,7 @@ function handleForm(email, password, history) {
     im.authenticate(email, password).then((authToken) => {
         console.log("authToken: ", authToken)
         create_user_session(authToken).then((r: {userType: string}) => {
-          let userType = (r.userType? r.userType : 'admin')
+          let userType = ((r.userType && r.userType !== undefined)? r.userType : 'admin')
             history.push("/" + userType)
         }).catch((err) => {
             alert("[Error]: " + err)
