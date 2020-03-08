@@ -1,9 +1,14 @@
 import React from "react"
-import ReactDOM from "react-dom"
-import Dashboard from './admin-dashboard'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
+import SideBar from './sidebar'
 
 const App = () => {
-    return <Dashboard/>
+    return (
+        // <p>hi</p>
+        <SideBar></SideBar>
+    )
 }
 
-ReactDOM.render(<App />, document.getElementById("app"))
+    
+ReactDOM.render(<App></App>, document.getElementById("app"))
