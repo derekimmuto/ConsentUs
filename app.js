@@ -149,11 +149,11 @@ app.post("/create-trial", (req, res) => {
         }
       
         let file = req.files.file;
-        let filePath = "./files/" + crypto.randomBytes(6).toString('hex') + file.name
+        let filePath = crypto.randomBytes(6).toString('hex') + file.name
 
         trialInfo.filePath = filePath
 
-        file.mv(filePath, function(err) {
+        file.mv("./files/" + filePath, function(err) {
           if (err)
             return res.status(500).send(err);
         });
