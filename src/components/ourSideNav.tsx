@@ -9,7 +9,7 @@ import SideNav, {
 
 const OurSideNav = () => {
   return (
-    <SideNav style={{backgroundColor: "#52C8FA"}}
+    <SideNav style={{backgroundColor: "#1085b8"}}
       onSelect={selected => {
         // Add your code here
       }}
