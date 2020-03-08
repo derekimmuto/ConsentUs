@@ -51,6 +51,19 @@ app.get("/logout", (req, res) => {
     });
 });
 
+app.post("/logout", (req, res) => {
+    console.log("logout post")
+    auth
+      .end_user_session(req)
+      .then(() => {
+        res.status(204).end()
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).end();
+      });
+});
+
 app.get("/dashboard", (req, res) => {
   auth
     .user_logged_in(req)
