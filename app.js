@@ -290,6 +290,48 @@ app.get("/trials-for-patient", (req, res) => {
     })
 })
 
+app.post("/consent-to-trial", (req, res) => {
+  auth
+  .user_logged_in(req)
+  .then(userInfo => {
+      if (!userInfo) {
+        res.status(403).end();
+        return;
+      }
+
+      let trialName = req.body.trialName
+      let recordID = req.body.recordID
+
+      DB.get_user_info(userInfo.email)
+      .then(consentusInfo => {
+      if (consentusInfo && consentusInfo.userType === "patient") {
+          DB.add_consent_to_profile(trialName, userInfo.email, recordID).then(() => {
+            DB.grant_patient_consent_for_trial(trialName, userInfo.email).then(() => {
+              res.status(204).end()
+            }).catch((err) => {
+              console.error(err)
+              res.status(500).end()
+            })  
+          }).catch((err) => {
+              console.error(err)
+              res.status(500).end()
+          })
+      } else {
+          res
+          .status(403)
+          .end("Must be an patient to use this endpoint.");
+      }
+      })
+      .catch(err => {
+          console.error(err);
+          res.status(500).end();
+      });
+  }).catch((err) => {
+      console.error(err)
+      res.status(500).end();
+  })
+})
+
 //app.get('/files', (__dirname, 'files'), {fallthrough: } );
 
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist', 'index.html')));

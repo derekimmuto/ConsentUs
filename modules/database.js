@@ -176,3 +176,17 @@ exports.grant_patient_consent_for_trial = (trialName, patientEmail) => {
         })
     })
 }
+
+exports.add_consent_to_profile = (trialName, userEmail, recordID) => {
+    let query = {email: userEmail}
+    let update = { $addToSet: {consents: [trialName, recordID]} } // works if not exists yet
+
+    DB.collection("users").updateOne(query, updates, (err, userInfo) => {
+        if (err) {
+            reject(err)
+        } else {
+            resolve(userInfo)
+        }
+    })
+
+}
