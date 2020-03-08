@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import TableView from "./tableView"
 
 const joe = [
@@ -34,7 +34,6 @@ const rows = [joe, ally, mark].map(
 
 const Patient = () => {
     const [patients, setPatients] = useState([joe, ally, mark]);
-    
     const cols = ["Name", "Study", "Status"]
 
     return (
