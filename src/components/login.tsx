@@ -32,8 +32,7 @@ const LoginForm = withRouter(({setUserType, history}) => (
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setUserType("admin")
-        handleForm(values.email, values.password, history)
+        handleForm(values.email, values.password, history, setUserType)
       }}
     >
       {({
@@ -85,8 +84,9 @@ const LoginForm = withRouter(({setUserType, history}) => (
                       Login
                     </button>
           
-          {errors.email && touched.email && errors.email}
+          
           <br />
+          {errors.email && touched.email && errors.email}
           {errors.password && touched.password && errors.password}
         </form>
       )}
@@ -96,7 +96,7 @@ const LoginForm = withRouter(({setUserType, history}) => (
   </div>
 ));
 
-function handleForm(email, password, history) {
+function handleForm(email, password, history, setUserType) {
     if (im.authToken) {
         im.deauthenticate()
     }
@@ -105,12 +105,13 @@ function handleForm(email, password, history) {
         console.log("authToken: ", authToken)
         create_user_session(authToken).then((r: {userType: string}) => {
           let userType = ((r.userType && r.userType !== undefined)? r.userType : 'admin')
-            history.push("/" + userType)
+          setUserType(userType)
+          history.push("/" + userType)
         }).catch((err) => {
             alert("[Error]: " + err)
         })
     }).catch((err) => {
-
+        
         alert("Unable to login: \n" + err)
     })
 }
@@ -137,8 +138,9 @@ function create_user_session(authToken) {
         http.open("POST", URL + "/login-user", true)
         http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         http.onreadystatechange = () => {
-            if (http.readyState == 4 && (http.status == 204 || http.status == 200)) {
-                resolve(http.responseText)
+            if (http.readyState == 4 && http.status == 200) {
+                let response = JSON.parse(http.responseText)
+                resolve(response)
             } else if (http.readyState == 4) {
                 reject(http.responseText)
             }
