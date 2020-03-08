@@ -24,7 +24,6 @@ const mark = [
 
 
 function make_link(state, link) {
-    console.log(state)
     return state == 'Complete'
         ? <a href={link} style={{color:'#1a237e'}}>{state}</a>
         : <a href={link} style={{color:'#2196f3'}}>{state}</a>

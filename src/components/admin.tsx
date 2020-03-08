@@ -76,9 +76,9 @@ const Admin = () => {
                 <CellLink to="/admin/view-documents">View Documents</CellLink>
             </Row>
             <Row>
-                {/* <Switch>
+                <Switch>
                     {[
-                        { end: "/add-new-trial", Comp: () => <Admin /> },
+                        { end: "/add-new-trial", Comp: () => <p>ADD TRIAL!!!!</p> },
                         { end: "/patients", Comp: () => <p>patients</p> },
                         {
                             end: "/view-document",
@@ -89,7 +89,7 @@ const Admin = () => {
                             {Comp()}
                         </Route>
                     ))}
-                </Switch> */}
+                </Switch>
             </Row>
         </Container>
     )
