@@ -24,7 +24,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 const OurSideNav = () => {
   return (
-    <SideNav
+    <SideNav style={{backgroundColor: "#52C8FA"}}
       onSelect={selected => {
         // Add your code here
       }}
