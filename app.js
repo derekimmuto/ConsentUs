@@ -19,7 +19,8 @@ const IMMUTO_HOST = process.env.IMMUTO_HOST || "https://dev.immuto.io"; // dev e
 var app = express();
 var im = immuto.init(true, IMMUTO_HOST); // leave blank for production use
 
-app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "dist")));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -30,13 +31,13 @@ if (process.env.MODE !== "PROD") {
 app.use(cors()); // DELETE ME IN PROD
 
 /******************************* Website Pages ********************************/
-app.get("/", (req, res) => {
-  // update this to reflect the build
-  res.sendFile(path.join(__dirname, "static", "html", "index.html"));
-});
+app.get('/api', (req, res, done) => res.status(201).json({ message: "Hello World!" }));
+
+
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist', 'index.html')));
+
 
 /* Optional Middleware */
-
 
 /************************************ API *************************************/
 app.post("/register-org-user", (req, res) => {
@@ -123,15 +124,23 @@ app.post("/logout", (req, res) => {
       });
 });
 
+app.use(fileUpload()); // gross
 app.post("/create-trial", (req, res) => {
-    auth
+  console.log(req.body)
+  console.log(req.files)
+
+  auth
     .user_logged_in(req)
     .then(userInfo => {
+        console.log(userInfo)
+        
         if (!userInfo) {
-          res.status(403).end();
+          res.status(403).end("No user info exists");
           return;
         }
-  
+        
+        
+
         // VALIDATE THIS
         let trialInfo = {
           "sponsor": req.body.sponsor,
@@ -153,12 +162,11 @@ app.post("/create-trial", (req, res) => {
         sampleFile.mv(filePath, function(err) {
           if (err)
             return res.status(500).send(err);
-      
-          res.send('File uploaded!');
         });
 
         DB.get_user_info(userInfo.email)
         .then(consentusInfo => {
+          console.log(consentusInfo)
         if (consentusInfo && consentusInfo.userType === "admin") {
             DB.add_trial(userInfo.email, trialInfo).then(() => {
                 res.status(204).end()
@@ -302,7 +310,8 @@ app.use(function(req, res, next) {
 
   // respond with html page
   if (req.accepts("html")) {
-    res.sendFile(path.join(__dirname, "static", "html", "404.html"));
+    //res.sendFile(path.join(__dirname, "static", "html", "404.html"));
+    res.send("Not found")
     return;
   }
 

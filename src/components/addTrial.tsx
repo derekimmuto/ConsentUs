@@ -6,13 +6,13 @@ import immuto from 'immuto-backend'
 export const im = immuto.init(true, "https://dev.immuto.io")
 
 
-const URL = "http://consentus.herokuapp.com"
+let URL = "http://consentus.herokuapp.com"
 
 const AddTrial = withRouter(({setUserType, history}) => (
     <Formik
-      initialValues={{ trialName: '', documentName: '', sponsor: ''}}
+      initialValues={{ trialName: '', documentName: '', sponsor: '', file: ''}}
       onSubmit={(values, { setSubmitting }) => {
-        handleForm()
+        handleForm(values.trialName, values.documentName, values.file, values.sponsor)
       }}
     >
       {({
@@ -45,6 +45,14 @@ const AddTrial = withRouter(({setUserType, history}) => (
           />
           <input
             className="form-control"
+            type="file"
+            name="file"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.file}
+          />
+          <input
+            className="form-control"
             type="text"
             name="sponsor"
             placeholder="Sponsor"
@@ -53,17 +61,42 @@ const AddTrial = withRouter(({setUserType, history}) => (
             value={values.sponsor}
           />
             <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
-                Login
+                Submit
             </button>
             </div>
         )}
     </Formik>
 ));
 
-function handleForm () {
+function handleForm (trialName, documentName, file, sponsor) {
+  var http = new XMLHttpRequest()
+  var formData = new FormData();
 
-    console.log("test")
-    
+  console.log(trialName)
+  console.log(documentName)
+  console.log(file)
+  console.log(sponsor)
+
+  // ACKSHUALLY (Delete after debugging)
+  //URL = "http://localhost:8001"
+
+  http.open("POST", URL + "/create-trial", true)
+  http.setRequestHeader("Content-Type", "multipart/form-data");  
+  http.onreadystatechange = () => {
+      if (http.readyState == 4 && http.status == 200) {
+          let response = JSON.parse(http.responseText)
+          window.location.href = "/admin"
+      } else if (http.readyState == 4) {
+        alert("Error: " + http.responseText)
+      }
+  }
+
+  formData.append("file", file);
+  formData.append("trialName", trialName)
+  formData.append("documentName", documentName)
+  formData.append("sponsor", sponsor)
+  formData.append("authToken", window.localStorage.authToken)
+  http.send(formData);
 }
 
 export default AddTrial;
