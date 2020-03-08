@@ -1,5 +1,5 @@
 import React from "react";
-// import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
+import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
 import {Formik} from "formik";
 // var im = Immuto.init(true, "https://dev.immuto.io") // https://dev.immuto.io for dev env
 import im from "immuto-backend";
@@ -7,7 +7,7 @@ import im from "immuto-backend";
 
 
 
-const LoginForm = () => (
+const LoginForm = ({setUserType}) => (
   <div>
     <h1>Login:</h1>
     <Formik
@@ -26,10 +26,8 @@ const LoginForm = () => (
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+        setUserType("admin")
+        handleForm(values.email, values.password)
       }}
     >
       {({
@@ -41,9 +39,7 @@ const LoginForm = () => (
         handleSubmit,
         isSubmitting,
       }) => (
-        <form onSubmit={() => {
-            handleForm(values.email, values.password)
-        }}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="email:">Email:</label>
           <input
             type="email"
@@ -61,9 +57,7 @@ const LoginForm = () => (
             onBlur={handleBlur}
             value={values.password}
             />
-          <button type="submit" onClick={() => {
-                handleForm(values.email, values.password)
-          }} disabled={isSubmitting}>
+          <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
             Submit
           </button>
           <br />
