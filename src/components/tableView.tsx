@@ -16,10 +16,10 @@ const TableView = ({ headings, rows }) => (
                         </tr>
                     </thead>
                     <tbody>
-                        {rows.map(r => (
-                            <tr>
+                        {rows.map((r,i) => (
+                            <tr key={i}>
                                 {r.map(c => (
-                                    <td>{c}</td>
+                                    <td key={c}>{c}</td>
                                 ))}
                             </tr>
                         ))}
