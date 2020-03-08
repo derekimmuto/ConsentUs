@@ -20,12 +20,16 @@ import LoginForm from "./components/login";
 import Patient from "./components/patient";
 import Admin from "./components/admin";
 
+import homepageBackground from "./assets/homepage.png"
+import homepageLogo from "./assets/homepage_logo.png"
+import './css/main.css'; 
+
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 const OurSideNav = () => {
   return (
-    <SideNav style={{backgroundColor: "#52C8FA"}}
+    <SideNav style={{backgroundColor: "#1092c5"}}
       onSelect={selected => {
         // Add your code here
       }}
@@ -44,6 +48,7 @@ const OurSideNav = () => {
               className="fa fa-fw fa-line-chart"
               style={{ fontSize: "1.75em" }}
             />
+          
           </NavIcon>
           <NavText>Charts</NavText>
           <NavItem eventKey="charts/linechart">
@@ -65,13 +70,14 @@ const App = () => {
 
   return (
     <Router>
-      <OurSideNav></OurSideNav>
-      <div style={{ marginLeft: 64 }}>
-        <TopBar redirect={redirect} />
+      <div >
         <Switch>
           <Route exact path="/">
-            <p>default</p>
-            <Link to="/login"><button>hi</button> </Link>
+            <div
+            style={{backgroundImage: "url(" + homepageBackground + ")", backgroundSize: "cover", height: "100vh", backgroundPosition: "center"}}>
+              <img className="text-center" id="homepageLogo" src={homepageLogo} alt="Homepage Logo" onClick={() => window.location.href = "/login"}  ></img>
+              <h1 id="homepageTitle" className="text-white text-center fixed-bottom">Simplifying and Securing Patient Consent</h1>
+            </div>
           </Route>
           <Route path="/login">
               {() => <LoginForm setUserType={setUserType}/>}
@@ -79,8 +85,17 @@ const App = () => {
           <Route path="/register">
             {() => <LoginForm setUserType={setUserType} />}
           </Route>
-          <Route path="/admin">{() => <Admin />}</Route>
-          <Route path="/patient">{() => <Patient />}</Route>
+          <Route path="/admin">
+            {() => 
+              <div style={{ marginLeft: 64 }}> 
+              <TopBar redirect={redirect} />
+              <OurSideNav></OurSideNav>
+              <Admin /></div>}
+          </Route>
+          <Route path="/patient">{() => <div style={{ marginLeft: 64 }}> 
+            <TopBar redirect={redirect} />
+            <OurSideNav></OurSideNav><Patient />
+            </div>}</Route>
         </Switch>
       </div>
     </Router>

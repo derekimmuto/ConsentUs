@@ -9,8 +9,9 @@ import im from "immuto-backend";
 
 
 const LoginForm = withRouter(({setUserType, history}) => (
-  <div>
-    <h1>Login:</h1>
+  <div className="gradient-background full-page">
+    <div className="center-in-page w-25 rounded-border">
+    <h1 className="text-center text-white mb-4">ConsentUs</h1>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -41,33 +42,57 @@ const LoginForm = withRouter(({setUserType, history}) => (
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email:">Email:</label>
+          {/* <label htmlFor="email:">Email:</label> */}
+          <div className="form-group">
+          <div className="input-group">
+          <div className="input-group-prepend help">
+                  <span class="input-group-text" id="">
+                    <span class="fas fa-at"></span>
+                  </span>
+                  </div>
           <input
+            className="form-control "
             type="email"
             name="email"
+            placeholder="email"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.email}
-          />
-          <br />
-          <label htmlFor="password">Password:</label>
+          /></div></div>
+          {/* <label htmlFor="password">Password:</label> */}
+          <div className="form-group">
+          <div className="input-group">
+          <div className="input-group-prepend help">
+                <span class="input-group-text" id="">
+                  <span class="fas fa-lock"></span>
+                </span>
+                </div>
           <input
+            className="form-control"
             type="password"
             name="password"
+            placeholder="********"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.password}
-            />
-          <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
-            Submit
-          </button>
-          <br />
+            /></div></div>
+            <div class="container">
+            <div class="row">
+              <div class="col text-center">
+              <button className="btn btn-outline-light mt-2 w-50" type="submit" onClick={handleSubmit} disabled={isSubmitting}>
+                      Login
+                    </button>
+              </div>
+            </div>
+          </div>
+          
           {errors.email && touched.email && errors.email}
           <br />
           {errors.password && touched.password && errors.password}
         </form>
       )}
     </Formik>
+    </div>
   </div>
 ));
 

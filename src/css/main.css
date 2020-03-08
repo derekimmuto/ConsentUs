@@ -1,0 +1,36 @@
+#homepageLogo {
+    cursor: pointer;
+    margin: 0;
+    position: absolute;
+    height: 50em;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#homepageTitle {
+    opacity: 90%;
+    top: 80%;
+    position: absolute;
+}
+
+.gradient-background {
+    background: linear-gradient(to right, #006195, #52C8FA);
+}
+
+.full-page {
+    height: 100vh;
+}
+
+.center-in-page {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rounded-border {
+    border-color: white;
+    border-width: 10px;
+}
