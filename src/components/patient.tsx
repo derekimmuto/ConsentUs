@@ -38,8 +38,8 @@ const Patient = () => {
     const cols = ["Name", "Study", "Status"]
 
     return (
-        //<p>hello</p>
-        <div>
+        
+        <div className="mt-3">
             <TableView title={"Studies:"} rows={rows} headings={cols}/>
         </div>
     );

@@ -110,7 +110,7 @@ exports.get_user_info = (userEmail) => {
 }
 
 
-exports.add_trail = (userEmail, trialData) => {
+exports.add_trial = (userEmail, trialData) => {
     return new Promise((resolve, reject) => {
         let query = {email: userEmail}
         DB.collection("trials").insertOne(query, (err, userInfo) => {
@@ -123,9 +123,9 @@ exports.add_trail = (userEmail, trialData) => {
     })
 }
 
-exports.get_trails_for_user = (userEmail, trialData) => {
+exports.get_trials_for_admin = (adminEmail) => {
     return new Promise((resolve, reject) => {
-        let query = {email: userEmail}
+        let query = {adminEmail}
         DB.collection("trials").find(query).toArray((err, array) => {
             if (err) {
                 reject(err)
