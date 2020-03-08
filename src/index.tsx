@@ -19,6 +19,7 @@ import SideNav, {
 import LoginForm from "./components/login";
 import Patient from "./components/patient";
 import Admin from "./components/admin";
+import immuto from 'immuto-backend'
 
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
