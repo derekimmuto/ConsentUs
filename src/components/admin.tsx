@@ -14,6 +14,15 @@ const Admin = () => {
             description: "this is a trial desc",
             subjects: [1, 2, 3],
             contacts: { PI: "John Jeremy", Sponsor: "Buffet" }
+        },
+        {
+            notes: "some stuff",
+            sponsor: "Pfzier",
+            startDate: new Date(),
+            endDate: new Date(),
+            description: "this is a trial desc",
+            subjects: [1, 2, 3],
+            contacts: { PI: "John Jeremy", Sponsor: "Buffet" }
         }
     ])
     const [patients, setPatients] = useState([])
@@ -21,24 +30,28 @@ const Admin = () => {
     return (
         <Container className="m-5">
             <Row>
-                <TableView></TableView>
-                <TableView></TableView>
-                <TableView></TableView>
-            </Row>
-            <Row className="mb-5">
-                <Col>
-                    <Card style={{ width: "18rem" }}>
-                        <Card.Body>
-                            <Card.Title>Active Trials</Card.Title>
-                            <Card.Text>{trials.length}</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <CellLink to="/admin/trials">Trials</CellLink>
-                <CellLink to="/admin/patients">Patients</CellLink>
-                <CellLink to="/admin/view-documents">View Documents</CellLink>
+                <TableView
+                    headings={["Sponsor", "Subjects"]}
+                    rows={trials.map(trial => [
+                        trial.sponsor,
+                        trial.subjects.length
+                    ])}
+                ></TableView>
+                <TableView
+                    headings={["Sponsor", "Subjects"]}
+                    rows={trials.map(trial => [
+                        trial.sponsor,
+                        trial.subjects.length
+                    ])}
+                ></TableView>
+
+                <TableView
+                    headings={["Sponsor", "Subjects"]}
+                    rows={trials.map(trial => [
+                        trial.sponsor,
+                        trial.subjects.length
+                    ])}
+                ></TableView>
             </Row>
             <Row>
                 <Switch>
@@ -60,34 +73,32 @@ const Admin = () => {
     )
 }
 
-const TableView = () => (
+const TableView = ({ headings, rows }) => (
     <Col>
-        <Table>
-            <thead>
-                <tr>
-                    <th>Table heading</th>
-                    <th>Table heading</th>
-                    <th>Table heading</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                </tr>
-                <tr>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                </tr>
-                <tr>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                </tr>
-            </tbody>
-        </Table>
+        <Card>
+            <Card.Body>
+                <Card.Title >Active Trials: {rows.length}</Card.Title>
+                {/* <div className="mb-:"/> */}
+                <Table striped={true} bordered={false}>
+                    <thead>
+                        <tr>
+                            {headings.map(h => (
+                                <th key={h}>{h}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows.map(r => (
+                            <tr>
+                                {r.map(c => (
+                                    <td>{c}</td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </Card.Body>
+        </Card>
     </Col>
 )
 const CellLink = ({ to, children }) => (
