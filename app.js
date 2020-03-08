@@ -21,7 +21,7 @@ var im = immuto.init(true, IMMUTO_HOST); // leave blank for production use
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 if (process.env.MODE !== "PROD") {
@@ -32,10 +32,6 @@ app.use(cors()); // DELETE ME IN PROD
 
 /******************************* Website Pages ********************************/
 app.get('/api', (req, res, done) => res.status(201).json({ message: "Hello World!" }));
-
-
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist', 'index.html')));
-
 
 /* Optional Middleware */
 
@@ -128,46 +124,41 @@ app.use(fileUpload()); // gross
 app.post("/create-trial", (req, res) => {
   console.log(req.body)
   console.log(req.files)
-
   auth
     .user_logged_in(req)
     .then(userInfo => {
-        console.log(userInfo)
         
         if (!userInfo) {
           res.status(403).end("No user info exists");
           return;
         }
         
-        
-
         // VALIDATE THIS
         let trialInfo = {
           "sponsor": req.body.sponsor,
           "trialName": req.body.trialName,
-          "admin": userInfo.email,
+          "adminEmail": userInfo.email,
+          "documentName": req.body.documentName,
           "toConsent": [],
           "consented": []
         }
-        
 
         if (!req.files || Object.keys(req.files).length === 0) {
           return res.status(400).send('No files were uploaded.');
         }
       
         let file = req.files.file;
-        let filePath = "./files/" + crypto.randomBytes(16) + filename
+        let filePath = "./files/" + crypto.randomBytes(16).toString('hex') + file.name
 
         trialInfo.filePath = filePath
 
-        sampleFile.mv(filePath, function(err) {
+        file.mv(filePath, function(err) {
           if (err)
             return res.status(500).send(err);
         });
 
         DB.get_user_info(userInfo.email)
         .then(consentusInfo => {
-          console.log(consentusInfo)
         if (consentusInfo && consentusInfo.userType === "admin") {
             DB.add_trial(userInfo.email, trialInfo).then(() => {
                 res.status(204).end()
@@ -203,7 +194,7 @@ app.get("/trials-for-admin", (req, res) => {
         DB.get_user_info(userInfo.email)
         .then(consentusInfo => {
         if (consentusInfo && consentusInfo.userType === "admin") {
-            DB.get_trials_for_user(userInfo.email).then((trials) => {
+            DB.get_trials_for_admin(userInfo.email).then((trials) => {
                 res.status(200).json(trials)
             }).catch((err) => {
                 console.error(err)
@@ -226,6 +217,7 @@ app.get("/trials-for-admin", (req, res) => {
 })
 
 app.post("/add-patient-to-trial", (req, res) => {
+
     auth
     .user_logged_in(req)
     .then(userInfo => {
@@ -297,13 +289,7 @@ app.get("/trials-for-patient", (req, res) => {
     })
 })
 
-
-
-
-
-
-
-
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist', 'index.html')));
 
 /* APP Middleware */
 app.use(function(req, res, next) {

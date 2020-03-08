@@ -16,7 +16,9 @@ import AddTrial from "./components/addTrial"
 import OngoingConsent from "./components/ongoingConsent"
 import OurSideNav from "./components/ourSideNav"
 import RevokeConsent from "./components/revokeConsent"
+import PatientDashboard from "./components/patient-dashboard"
 import AddTrial from "./components/addTrial"
+import Trials from './components/trials'
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
 

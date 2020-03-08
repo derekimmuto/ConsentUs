@@ -5,7 +5,7 @@ import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
 import {Formik} from "formik";
 import immuto from 'immuto-backend'
 export const im = immuto.init(true, "https://dev.immuto.io")
-
+import axios from "axios"
 
 let URL = "http://consentus.herokuapp.com"
 
@@ -70,34 +70,20 @@ const AddTrial = withRouter(({setUserType, history}) => (
 ));
 
 function handleForm (trialName, documentName, file, sponsor) {
-  var http = new XMLHttpRequest()
-  var formData = new FormData();
-
-  console.log(trialName)
-  console.log(documentName)
-  console.log(file)
-  console.log(sponsor)
-
-  // ACKSHUALLY (Delete after debugging)
-  //URL = "http://localhost:8001"
-
-  http.open("POST", URL + "/create-trial", true)
-  http.setRequestHeader("Content-Type", "multipart/form-data");  
-  http.onreadystatechange = () => {
-      if (http.readyState == 4 && http.status == 200) {
-          let response = JSON.parse(http.responseText)
-          window.location.href = "/admin"
-      } else if (http.readyState == 4) {
-        alert("Error: " + http.responseText)
-      }
-  }
-
-  formData.append("file", file);
-  formData.append("trialName", trialName)
-  formData.append("documentName", documentName)
-  formData.append("sponsor", sponsor)
-  formData.append("authToken", window.localStorage.authToken)
-  http.send(formData);
+  const data = new FormData() 
+  console.log(document.querySelector('input[type="file"]').files[0])
+  data.append('file', document.querySelector('input[type="file"]').files[0])
+  data.append("trialName", trialName)
+  data.append("documentName", documentName)
+  data.append("sponsor", sponsor)
+  data.append("authToken", window.localStorage.authToken)
+  axios.post("http://localhost:8001/create-trial", data, { 
+      })
+      .then(res => { // then print response status
+        window.location.href="/admin"
+      }).catch((err) => {
+        console.error(err)
+      })
 }
 
 export default AddTrial;

@@ -1,17 +1,19 @@
 import React from 'react';
 import axios from 'axios';
-import Study from 'study';
+import Study from './study';
 
+let URL = "http://consentus.herokuapp.com"
+URL = "http://localhost:8001"
 
 class PatientDashboard extends React.Component {
     state = {
         studies: []
     }
-    
+
     componentDidMount() {
-        axios.get('http://google.com') //API CALL TO DATABASE
+        axios.get(URL + '/trials-for-patient?authToken=' + window.localStorage.authToken) 
         .then(res => {
-            this.setState({
+                this.setState({
                 studies: res.data
             });
        })   
@@ -20,9 +22,8 @@ class PatientDashboard extends React.Component {
     render() {
         return (
             <div>
-                <h2>Clients</h2>
-                <Study data={this.state.studies}/>
-                
+                <h4>Studies</h4>
+                <Study props={this.state.studies}/>  
             </div>
         )
     }
