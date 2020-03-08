@@ -18,6 +18,10 @@ import RevokeConsent from "./components/revokeConsent"
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
 
+import homepageBackground from "./assets/homepage.png"
+import homepageLogo from "./assets/homepage_logo.png"
+import "./css/main.css"
+
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css"
 
@@ -28,15 +32,34 @@ const App = () => {
 
     return (
         <Router>
-            <OurSideNav></OurSideNav>
-            <div style={{ marginLeft: 64 }}>
-                <TopBar redirect={redirect} />
+            <div>
                 <Switch>
                     <Route exact path="/">
-                        <p>default</p>
-                        <Link to="/login">
-                            <button>hi</button>{" "}
-                        </Link>
+                        <div
+                            style={{
+                                backgroundImage:
+                                    "url(" + homepageBackground + ")",
+                                backgroundSize: "cover",
+                                height: "100vh",
+                                backgroundPosition: "center"
+                            }}
+                        >
+                            <img
+                                className="text-center"
+                                id="homepageLogo"
+                                src={homepageLogo}
+                                alt="Homepage Logo"
+                                onClick={() =>
+                                    (window.location.href = "/login")
+                                }
+                            ></img>
+                            <h1
+                                id="homepageTitle"
+                                className="text-white text-center fixed-bottom"
+                            >
+                                Simplifying and Securing Patient Consent
+                            </h1>
+                        </div>
                     </Route>
                     <Route path="/login">
                         {() => <LoginForm setUserType={setUserType} />}
@@ -44,10 +67,31 @@ const App = () => {
                     <Route path="/register">
                         {() => <LoginForm setUserType={setUserType} />}
                     </Route>
-                    <Route path="/admin">{() => <Admin />}</Route>
-                    <Route path="/patient">{() => <Patient />}</Route>
-                    <Route path="/revoke-consent">{() => <RevokeConsent studyName={"MyStudy"}/>}</Route>
-                    <Route path="/confirm-consent">{() => <ConfirmConsentGivent studyName={"MyStudy"}/>}</Route>
+                    <Route path="/admin">
+                        {() => (
+                            <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav></OurSideNav>
+                                <Admin />
+                            </div>
+                        )}
+                    </Route>
+                    <Route path="/patient">
+                        {() => (
+                            <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav></OurSideNav>
+                                <Patient />
+                            </div>
+                        )}
+                    </Route>
+
+                    <Route path="/revoke-consent">
+                        {() => <RevokeConsent studyName={"MyStudy"} />}
+                    </Route>
+                    <Route path="/confirm-consent">
+                        {() => <ConfirmConsentGivent studyName={"MyStudy"} />}
+                    </Route>
                     <Route path="/ongoing-consent">
                         {() => <OngoingConsent studyName={"MyStudy"} />}
                     </Route>
