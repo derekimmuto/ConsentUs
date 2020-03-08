@@ -2,11 +2,13 @@ import React from "react";
 import {withRouter} from 'react-router-dom'
 import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
 import {Formik} from "formik";
-// var im = Immuto.init(true, "https://dev.immuto.io") // https://dev.immuto.io for dev env
-import im from "immuto-backend";
-//onclick="login()" for login-button
+import immuto from 'immuto-backend'
 
+export const im = immuto.init(true, "https://dev.immuto.io")
 
+console.log(im)
+
+const URL = "http://consentus.herokuapp.com"
 
 const LoginForm = withRouter(({setUserType, history}) => (
   <div className="gradient-background full-page">
@@ -102,13 +104,12 @@ function handleForm(email, password, history) {
     }
 
     im.authenticate(email, password).then((authToken) => {
-        create_user_session(authToken).then(r => {
-            if (r && !r.userType) {
-              r.userType = 'admin'
-            }
-            history.push("/" + r.userType)
+        console.log("authToken: ", authToken)
+        create_user_session(authToken).then((r: {userType: string}) => {
+          let userType = (r.userType? r.userType : 'admin')
+            history.push("/" + userType)
         }).catch((err) => {
-            alert(err)
+            alert("[Error]: " + err)
         })
     }).catch((err) => {
 
@@ -117,33 +118,35 @@ function handleForm(email, password, history) {
 }
 
 function create_user_session(authToken) {
-  return fetch(URL + '/login-user', {
-    method: 'POST',
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    referrerPolicy: 'no-referrer', // no-referrer, *client
-    body: JSON.stringify(authToken) // body data type must match "Content-Type" header
-  })
-  .then(r => JSON.parse(r))
-  .catch(e => console.error("[Login Error]: ", e))
-    // return new Promise((resolve, reject) => {
-    //     var http = new XMLHttpRequest()
-    //     let sendstring = "authToken=" + authToken
-    //     http.open("POST", "/login-user", true)
-    //     http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    //     http.onreadystatechange = () => {
-    //         if (http.readyState == 4 && http.status == 204) {
-    //             resolve()
-    //         } else if (http.readyState == 4) {
-    //             reject(http.responseText)
-    //         }
-    //     }
-    //     http.send(sendstring)
-    // })
+  console.log(URL)
+  console.log(JSON.stringify(authToken))
+  // return fetch(URL + 'login-user', {
+  //   method: 'POST',
+  //   mode: 'cors', // no-cors, *cors, same-origin
+  //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+  //   // credentials: 'omit', // include, *same-origin, omit
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   referrerPolicy: 'no-referrer', // no-referrer, *client
+  //   body: "authToken=" + authToken // body data type must match "Content-Type" header
+  // })
+  // .then(r => JSON.parse(r))
+  // .catch(e => console.error("[Login Error]: ", e))
+    return new Promise((resolve, reject) => {
+        var http = new XMLHttpRequest()
+        let sendstring = "authToken=" + authToken
+        http.open("POST", URL + "/login-user", true)
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        http.onreadystatechange = () => {
+            if (http.readyState == 4 && (http.status == 204 || http.status == 200)) {
+                resolve(http.responseText)
+            } else if (http.readyState == 4) {
+                reject(http.responseText)
+            }
+        }
+        http.send(sendstring)
+    })
 }
 
 export default LoginForm;
