@@ -8,6 +8,26 @@
     transform: translate(-50%, -50%);
 }
 
+#navbarTop {
+    background-color: linear-gradient(to right, #ffffff, #dddddd) !important;
+    box-shadow: 0 2px 7px -4px rgba(0,0,0,.4);
+}
+
+.semi-bold {
+    font-weight: 600 !important;
+}
+
+#logoutButton {
+    border-radius: 6px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: #ababab
+}
+
+#logoutButton:hover {
+    background-color: #dfdfdf !important;
+}
+
 #homepageTitle {
     opacity: 90%;
     top: 80%;
@@ -33,7 +53,7 @@
 }
 
 #loginLogo {
-    width: 90% ;
+    width: 95% ;
 }
 
 .center-row {
@@ -43,3 +63,15 @@
     display: flex;
     align-items: center;
   }
+
+.logo-font {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.color-primary {
+    color: #52C8FA !important;
+}
+
+.hover-secondary:hover {
+    color: #006195 !important
+}

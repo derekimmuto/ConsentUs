@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { withRouter } from "react-router-dom"
 import {
     Container,
@@ -12,6 +12,9 @@ import {
 import { Formik, Field } from "formik"
 import immuto from "immuto-backend"
 export const im = immuto.init(true, "https://dev.immuto.io")
+
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const OngoingConsent = withRouter(({ studyName }) => (
     <div>
@@ -43,7 +46,8 @@ const OngoingConsent = withRouter(({ studyName }) => (
                     <form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
-                                <h3>TOD0: PDF INFO WILL GO HERE</h3>
+                            <Document file={{url: "http://www.pdf995.com/samples/pdf.pdf"}}
+                                onLoadError={console.error} />                            
                             </Col>
                         </Row>
                         <Row>
@@ -67,7 +71,6 @@ const OngoingConsent = withRouter(({ studyName }) => (
                                 </label>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col>
                                 <button
@@ -97,3 +100,9 @@ function handleForm(consent, termsConditions, fullName) {
 }
 
 export default OngoingConsent;
+
+
+
+
+
+                                

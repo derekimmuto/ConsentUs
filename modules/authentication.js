@@ -56,7 +56,7 @@ exports.user_logged_in = (req) => {
             return
         }
 
-        DB.get_user_session().then((sessionInfo) => {
+        DB.get_user_session(authToken).then((sessionInfo) => {
             if (sessionInfo) {
                 resolve(sessionInfo)
             } else {

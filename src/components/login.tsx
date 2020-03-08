@@ -15,7 +15,7 @@ const LoginForm = withRouter(({setUserType, history}) => (
     <div className="row center-row">
     <div className="col-2 col-lg-3"></div>
     <div className="col-8 col-lg-6 text-center rounded-border m-2">
-    <img id="loginLogo" className="text-white mb-4" src={bwlogo}></img>
+    <img id="loginLogo" className="text-white mb-4 px-0" src={bwlogo}></img>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -102,9 +102,10 @@ function handleForm(email, password, history, setUserType) {
     }
 
     im.authenticate(email, password).then((authToken) => {
-        console.log("authToken: ", authToken)
+        window.localStorage.authToken = authToken
         create_user_session(authToken).then((r: {userType: string}) => {
           let userType = ((r.userType && r.userType !== undefined)? r.userType : 'admin')
+          window.localStorage.userType = userType
           setUserType(userType)
           history.push("/" + userType)
         }).catch((err) => {

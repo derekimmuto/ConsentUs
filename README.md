@@ -1,5 +1,5 @@
-# Consentsus
-Project started for the MIT Bitcoin Expo Hackathon
+# ConsentUs
 
-Identity verification contract live on Kovan testnet
-https://kovan.etherscan.io/address/0x5f198d52b3f4f1642441e3d196d37adea1b183ce
+Blockchain project for simplifying and securing patient consent in clinical trials.
+
+Contributers: Sebastian Coates, Peter Smiley, Derek Strauss, Kostas Tsiampouris, Joe Howarth and Baiqing Lyu 
