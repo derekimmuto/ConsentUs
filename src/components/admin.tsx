@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link, useRouteMatch, Switch, Route } from "react-router-dom"
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap"
+import TableView from './tableView'
 
 const Admin = () => {
     const { url, path } = useRouteMatch()

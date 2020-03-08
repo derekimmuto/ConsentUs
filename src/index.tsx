@@ -71,7 +71,7 @@ const App = () => {
                         {() => (
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
-                                <OurSideNav></OurSideNav>
+                                <OurSideNav userType={userType}></OurSideNav>
                                 <Admin />
                             </div>
                         )}
@@ -80,7 +80,7 @@ const App = () => {
                         {() => (
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
-                                <OurSideNav></OurSideNav>
+                                <OurSideNav userType={userType}></OurSideNav>
                                 <Patient />
                             </div>
                         )}
