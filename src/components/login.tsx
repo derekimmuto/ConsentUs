@@ -6,14 +6,16 @@ import immuto from 'immuto-backend'
 
 export const im = immuto.init(true, "https://dev.immuto.io")
 
-console.log(im)
+import bwlogo from "../assets/logo_bw.png"
 
 const URL = "http://consentus.herokuapp.com"
 
 const LoginForm = withRouter(({setUserType, history}) => (
-  <div className="gradient-background full-page">
-    <div className="center-in-page w-25 rounded-border">
-    <h1 className="text-center text-white mb-4">ConsentUs</h1>
+  <div className="container-flex gradient-background full-page ">
+    <div className="row center-row">
+    <div className="col-2 col-lg-3"></div>
+    <div className="col-8 col-lg-6 text-center rounded-border m-2">
+    <img id="loginLogo" className="text-white mb-4" src={bwlogo}></img>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -48,12 +50,12 @@ const LoginForm = withRouter(({setUserType, history}) => (
           <div className="form-group">
           <div className="input-group">
           <div className="input-group-prepend help">
-                  <span class="input-group-text" id="">
-                    <span class="fas fa-at"></span>
+                  <span className="input-group-text">
+                    <span className="fas fa-at"></span>
                   </span>
                   </div>
           <input
-            className="form-control "
+            className="form-control"
             type="email"
             name="email"
             placeholder="email"
@@ -65,8 +67,8 @@ const LoginForm = withRouter(({setUserType, history}) => (
           <div className="form-group">
           <div className="input-group">
           <div className="input-group-prepend help">
-                <span class="input-group-text" id="">
-                  <span class="fas fa-lock"></span>
+                <span className="input-group-text" id="">
+                  <span className="fas fa-lock"></span>
                 </span>
                 </div>
           <input
@@ -78,15 +80,10 @@ const LoginForm = withRouter(({setUserType, history}) => (
             onBlur={handleBlur}
             value={values.password}
             /></div></div>
-            <div class="container">
-            <div class="row">
-              <div class="col text-center">
-              <button className="btn btn-outline-light mt-2 w-50" type="submit" onClick={handleSubmit} disabled={isSubmitting}>
+
+              <button className="btn btn-outline-light mt-2 mx-0 w-25" type="submit" onClick={handleSubmit} disabled={isSubmitting}>
                       Login
                     </button>
-              </div>
-            </div>
-          </div>
           
           {errors.email && touched.email && errors.email}
           <br />
@@ -94,6 +91,7 @@ const LoginForm = withRouter(({setUserType, history}) => (
         </form>
       )}
     </Formik>
+    </div>
     </div>
   </div>
 ));
