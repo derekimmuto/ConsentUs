@@ -68,13 +68,13 @@ function handleForm() {
     if (true)
         alert("consent revoked, todo: post to database")
     } else {
-        alert("inadiquate name")
+        // alert("inadiquate name")
     }
 }
 
 
     } else {
-        alert("inadiquate name")
+        // alert("inadiquate name")
     }
 }
 
