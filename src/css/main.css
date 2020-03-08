@@ -43,3 +43,15 @@
     display: flex;
     align-items: center;
   }
+
+.logo-font {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.color-primary {
+    color: #52C8FA !important;
+}
+
+.hover-secondary:hover {
+    color: #006195 !important
+}

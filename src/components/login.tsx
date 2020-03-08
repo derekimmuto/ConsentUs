@@ -102,7 +102,7 @@ function handleForm(email, password, history, setUserType) {
     }
 
     im.authenticate(email, password).then((authToken) => {
-        console.log("authToken: ", authToken)
+        window.localStorage.authToken = authToken
         create_user_session(authToken).then((r: {userType: string}) => {
           let userType = ((r.userType && r.userType !== undefined)? r.userType : 'admin')
           setUserType(userType)
