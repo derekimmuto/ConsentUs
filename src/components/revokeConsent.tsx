@@ -10,8 +10,6 @@ import {
     FormControl
 } from "react-bootstrap"
 import { Formik, Field } from "formik"
-import immuto from "immuto-backend"
-export const im = immuto.init(true, "https://dev.immuto.io")
 
 const RevokeConsent = (({ studyName }) => (
     <div className="container-flex gradient-background full-page ">
@@ -65,16 +63,12 @@ const RevokeConsent = (({ studyName }) => (
 ))
 
 function handleForm() {
-    if (true)
-        alert("consent revoked, todo: post to database")
+    if (true) {
+        // TODO: full name is the same as database patient name
+        // TODO: revoke patient from database
+        //alert("consent revoked, todo: post to database")
     } else {
-        alert("inadiquate name")
-    }
-}
-
-
-    } else {
-        alert("inadiquate name")
+        //alert("inadiquate name")
     }
 }
 

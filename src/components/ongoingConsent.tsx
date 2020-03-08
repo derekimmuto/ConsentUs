@@ -79,11 +79,11 @@ return (
                         </Row>
                         <Row>
                             <Col>
-                                <button
+                                <button>
                                     type="submit"
                                     onClick={handleSubmit}
                                     disabled={isSubmitting}
-                                >
+                                
                                     Submit
                                 </button>
                             </Col>
@@ -99,9 +99,7 @@ function handleForm(consent, termsConditions, fullName) {
     if (consent && termsConditions) {
         // TODO: full name is the same as database patient name
         // TODO: post to database
-        alert("consent given, todo: post to database")
     } else {
-        alert("inadiquate consent")
     }
 }
 
