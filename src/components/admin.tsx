@@ -53,6 +53,21 @@ const Admin = () => {
                     ])}
                 ></TableView>
             </Row>
+            <Row className="mb-5">
+                <Col>
+                    <Card style={{ width: "18rem" }}>
+                        <Card.Body>
+                            <Card.Title>Active Trials</Card.Title>
+                            <Card.Text>{trials.length}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <CellLink to="/admin/trials">Trials</CellLink>
+                <CellLink to="/admin/patients">Patients</CellLink>
+                <CellLink to="/admin/view-documents">View Documents</CellLink>
+            </Row>
             <Row>
                 <Switch>
                     {[
@@ -73,34 +88,6 @@ const Admin = () => {
     )
 }
 
-const TableView = ({ headings, rows }) => (
-    <Col>
-        <Card>
-            <Card.Body>
-                <Card.Title >Active Trials: {rows.length}</Card.Title>
-                {/* <div className="mb-:"/> */}
-                <Table striped={true} bordered={false}>
-                    <thead>
-                        <tr>
-                            {headings.map(h => (
-                                <th key={h}>{h}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows.map(r => (
-                            <tr>
-                                {r.map(c => (
-                                    <td>{c}</td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </Card.Body>
-        </Card>
-    </Col>
-)
 const CellLink = ({ to, children }) => (
     <Col>
         <Link to={to}>
