@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from "react"
 import axios from 'axios';
-import Immuto from 'immuto-backend'
 import { withRouter } from "react-router-dom"
+import Immuto from "immuto-backend"
 import {
     Container,
     Row,
@@ -56,7 +56,7 @@ return (
                     <form onSubmit={handleSubmit}>
                         <Row>
                             <Col>
-                                <Document file={{url: pdf_source}}
+                            <Document file={{url: "http://consentus.herokuapp.com/7cb0efbb93d4Informed%20Consent%20PDF.pdf"}}
                                 onLoadError={console.error} />                            
                             </Col>
                         </Row>
@@ -118,24 +118,8 @@ function handleForm(consent, termsConditions, fullName, history) {
 }
 
 function download() {
-
-
-    // const serverRequest = axios
-    //     .get(pdf_source)
-    //     .then(function(result) {    
-    //         console.log(result)
-    //         let im = Immuto.init(true, "https://dev.immuto.io")
-    //         let user_pwd = "12345!"
-    //         let user_email = "user@user.io"
-    //         im.create_digital_agreement(result, "consent form", "single_sign", user_pwd, [user_email])
-    //             .then((recordID) => {
-    //                 console.log("Record id = " + recordID)
-    //             })
-    //     //   _this.setState({
-    //     //     jobs: result.data.jobs
-    //     //   });
-    //     })
-  }
+   
+}
 
 export default OngoingConsent;
 
