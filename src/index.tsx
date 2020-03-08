@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Link,
   Redirect
 } from "react-router-dom";
 import TopBar from "./top-bar";
@@ -68,11 +69,12 @@ const App = () => {
       <div style={{ marginLeft: 64 }}>
         <TopBar redirect={redirect} />
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <p>default</p>
+            <Link to="/login"><button>hi</button> </Link>
           </Route>
           <Route path="/login">
-            <p>hi</p>
+              {() => <LoginForm setUserType={setUserType}/>}
           </Route>
           <Route path="/register">
             {() => <LoginForm setUserType={setUserType} />}

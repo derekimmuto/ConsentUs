@@ -1,4 +1,5 @@
 import React from "react";
+import {withRouter} from 'react-router-dom'
 import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
 import {Formik} from "formik";
 // var im = Immuto.init(true, "https://dev.immuto.io") // https://dev.immuto.io for dev env
@@ -7,7 +8,7 @@ import im from "immuto-backend";
 
 
 
-const LoginForm = ({setUserType}) => (
+const LoginForm = withRouter(({setUserType, history}) => (
   <div>
     <h1>Login:</h1>
     <Formik
@@ -27,7 +28,7 @@ const LoginForm = ({setUserType}) => (
       }}
       onSubmit={(values, { setSubmitting }) => {
         setUserType("admin")
-        handleForm(values.email, values.password)
+        handleForm(values.email, values.password, history)
       }}
     >
       {({
@@ -68,42 +69,56 @@ const LoginForm = ({setUserType}) => (
       )}
     </Formik>
   </div>
-);
+));
 
-function handleForm(email, password) {
-    console.log(email)
-    console.log(password)
-    // if (im.authToken) {
-    //     im.deauthenticate()
-    // }
+function handleForm(email, password, history) {
+    if (im.authToken) {
+        im.deauthenticate()
+    }
 
-    // im.authenticate(email, password).then((authToken) => {
-    //     create_user_session(authToken).then(() => {
-    //         window.location.href = "/dashboard"
-    //     }).catch((err) => {
-    //         alert(err)
-    //     })
-    // }).catch((err) => {
+    im.authenticate(email, password).then((authToken) => {
+        create_user_session(authToken).then(r => {
+            if (r && !r.userType) {
+              r.userType = 'admin'
+            }
+            history.push("/" + r.userType)
+        }).catch((err) => {
+            alert(err)
+        })
+    }).catch((err) => {
 
-    //     alert("Unable to login: \n" + err)
-    // })
+        alert("Unable to login: \n" + err)
+    })
 }
 
 function create_user_session(authToken) {
-    return new Promise((resolve, reject) => {
-        var http = new XMLHttpRequest()
-        let sendstring = "authToken=" + authToken
-        http.open("POST", "/login-user", true)
-        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-        http.onreadystatechange = () => {
-            if (http.readyState == 4 && http.status == 204) {
-                resolve()
-            } else if (http.readyState == 4) {
-                reject(http.responseText)
-            }
-        }
-        http.send(sendstring)
-    })
+  return fetch(URL + '/login-user', {
+    method: 'POST',
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    referrerPolicy: 'no-referrer', // no-referrer, *client
+    body: JSON.stringify(authToken) // body data type must match "Content-Type" header
+  })
+  .then(r => JSON.parse(r))
+  .catch(e => console.error("[Login Error]: ", e))
+    // return new Promise((resolve, reject) => {
+    //     var http = new XMLHttpRequest()
+    //     let sendstring = "authToken=" + authToken
+    //     http.open("POST", "/login-user", true)
+    //     http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    //     http.onreadystatechange = () => {
+    //         if (http.readyState == 4 && http.status == 204) {
+    //             resolve()
+    //         } else if (http.readyState == 4) {
+    //             reject(http.responseText)
+    //         }
+    //     }
+    //     http.send(sendstring)
+    // })
 }
 
 export default LoginForm;
