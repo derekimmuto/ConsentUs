@@ -5,7 +5,7 @@ const TableView = ({title, headings, rows }) => (
     <Col>
         <Card>
             <Card.Body>
-                <Card.Title >{title} {rows.length}</Card.Title>
+                <Card.Title >{title}</Card.Title>
                 {/* <div className="mb-:"/> */}
                 <Table striped={true} bordered={false}>
                     <thead>
