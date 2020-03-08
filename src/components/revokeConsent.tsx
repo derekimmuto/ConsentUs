@@ -65,10 +65,14 @@ const RevokeConsent = (({ studyName }) => (
 ))
 
 function handleForm() {
-    if (true) {
-        // TODO: full name is the same as database patient name
-        // TODO: revoke patient from database
+    if (true)
         alert("consent revoked, todo: post to database")
+    } else {
+        alert("inadiquate name")
+    }
+}
+
+
     } else {
         alert("inadiquate name")
     }

@@ -19,7 +19,7 @@ const Study = (props) => {
         )
     }
     return (
-        items
+        <>items</>
     )
 }
 

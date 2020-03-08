@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import axios from "axios"
+import React, { Component, useEffect } from "react"
+import axios from 'axios';
 import { withRouter } from "react-router-dom"
 import Immuto from "immuto-backend"
 import {
@@ -18,7 +18,11 @@ export const im = immuto.init(true, "https://dev.immuto.io")
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const OngoingConsent = withRouter(({ studyName }) => (
+const pdf_source = "http://consentus.herokuapp.com/7cb0efbb93d4Informed%20Consent%20PDF.pdf"
+
+const OngoingConsent = withRouter(({ studyName }) => {
+    useEffect(download, [])
+return (
     <div>
         <h1>{studyName}</h1>
         <Formik
@@ -89,7 +93,7 @@ const OngoingConsent = withRouter(({ studyName }) => (
             )}
         </Formik>
     </div>
-))
+))}
 
 function handleForm(consent, termsConditions, fullName) {
     if (consent && termsConditions) {
