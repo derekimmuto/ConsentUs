@@ -20,6 +20,7 @@ var app = express();
 var im = immuto.init(true, IMMUTO_HOST); // leave blank for production use
 
 app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "files")));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -127,7 +128,7 @@ app.post("/create-trial", (req, res) => {
   auth
     .user_logged_in(req)
     .then(userInfo => {
-        
+        console.log(userInfo)
         if (!userInfo) {
           res.status(403).end("No user info exists");
           return;
@@ -148,7 +149,7 @@ app.post("/create-trial", (req, res) => {
         }
       
         let file = req.files.file;
-        let filePath = "./files/" + crypto.randomBytes(16).toString('hex') + file.name
+        let filePath = "./files/" + crypto.randomBytes(6).toString('hex') + file.name
 
         trialInfo.filePath = filePath
 
@@ -288,6 +289,8 @@ app.get("/trials-for-patient", (req, res) => {
         res.status(500).end();
     })
 })
+
+//app.get('/files', (__dirname, 'files'), {fallthrough: } );
 
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist', 'index.html')));
 

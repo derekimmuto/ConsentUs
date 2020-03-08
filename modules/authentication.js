@@ -55,8 +55,9 @@ exports.user_logged_in = (req) => {
             resolve(false)
             return
         }
-
+        console.log(authToken)
         DB.get_user_session(authToken).then((sessionInfo) => {
+            console.log(sessionInfo)
             if (sessionInfo) {
                 resolve(sessionInfo)
             } else {
@@ -69,6 +70,11 @@ exports.user_logged_in = (req) => {
 }
 
 function get_auth_token(req) {
+    if (req.body) {
+        if (req.body.authToken) {
+            return req.body.authToken
+        }
+    }
     let cookies = (cookie.parse(req.headers.cookie || ''));
     if (!(utils.is_empty(cookies))) {
         if (cookies.authToken) {
@@ -78,11 +84,6 @@ function get_auth_token(req) {
     if (req.query) {
         if (req.query.authToken) {
             return req.query.authToken 
-        }
-    }
-    if (req.body) {
-        if (req.body.authToken) {
-            return req.body.authToken
         }
     }
     return undefined

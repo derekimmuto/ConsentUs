@@ -30,7 +30,7 @@ const OurSideNav = (userType) => {
             <NavIcon>
             <a href="/patient"><i className="fas fa-fw fa-diagnoses" style={{ fontSize: "1.75em" }} /></a>
             </NavIcon>
-            <NavText>Trials</NavText>
+            <NavText>Profile</NavText>
           </NavItem>
         </SideNav.Nav>
       </SideNav>

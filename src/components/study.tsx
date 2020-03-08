@@ -1,8 +1,8 @@
 import React from 'react';
-import {Card, Button, List} from 'react-bootstrap'
+import {Card, Button} from 'react-bootstrap'
 
 const Study = (props) => {
-    let studyInfo = props.props
+    let studiesInfo = props.props
 
     let items = []
     for (let studyInfo of studiesInfo) {

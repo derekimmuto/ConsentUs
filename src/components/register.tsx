@@ -4,16 +4,23 @@ import { Form, Button, FormGroup, FormControl } from "react-bootstrap";
 import {Formik} from "formik";
 import immuto from 'immuto-backend'
 export const im = immuto.init(true, "https://dev.immuto.io")
+import bwlogo from "../assets/logo_bw.png"
 
 console.log(im)
 
 const URL = "http://consentus.herokuapp.com/"
 
-const LoginForm = withRouter(({setUserType, history}) => (
+const RegisterForm = withRouter(({setUserType, history}) => (
+  <div className="container-flex gradient-background full-page ">
+
+  <div className="row center-row">
+    <div className="col-2 col-lg-3"></div>
+    <div className="col-8 col-lg-6 text-center rounded-border m-2">
   <div>
-    <h1>Login:</h1>
+  <img id="loginLogo" className="text-white mb-4 px-0" src={bwlogo}></img>
+    <h1 className="text-white mb-4">Registration</h1>
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: '', password: '', confirmPassword: '' }}
       validate={values => {
         const errors = {};
         if (!values.email) {
@@ -22,8 +29,10 @@ const LoginForm = withRouter(({setUserType, history}) => (
             errors.password = 'Password Required'; //Todo: PASSWORD VALIDATION
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
+        ){
           errors.email = 'Invalid email address';
+        } else if (password !== confirmPassword) {
+          errors.password = 'Passwords do not match';
         }
         return errors;
       }}
@@ -41,25 +50,66 @@ const LoginForm = withRouter(({setUserType, history}) => (
         handleSubmit,
         isSubmitting,
       }) => (
-          <div>
-            <h3>Welcome to ConsentUs</h3>
-            <textarea>
-                You're recieving this email because you've been added to a clinical trial. Confirm your 
-                participation and create an account. If you're unsure of why you recieved this please
-                repy.
-            </textarea>
-            <form onSubmit={handleSubmit}>
-            <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
-                Submit
-            </button>
-            <br />
-            {errors.email && touched.email && errors.email}
-            <br />
-            {errors.password && touched.password && errors.password}
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+        {/* <label htmlFor="email:">Email:</label> */}
+        <div className="form-group">
+        <div className="input-group">
+        <div className="input-group-prepend help">
+                <span className="input-group-text">
+                  <span className="fas fa-at"></span>
+                </span>
+                </div>
+        <input
+          className="form-control"
+          type="email"
+          name="email"
+          placeholder="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+        /></div></div>
+        {/* <label htmlFor="password">Password:</label> */}
+        <div className="form-group">
+        <div className="input-group">
+        <div className="input-group-prepend help">
+              <span className="input-group-text" id="">
+                <span className="fas fa-lock"></span>
+              </span>
+              </div>
+        <input
+          className="form-control"
+          type="password"
+          name="password"
+          placeholder="********"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+          />
+          
+          <input
+          className="form-control"
+          type="password"
+          name="confirmPassword"
+          placeholder="********"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.confirmPassword}
+          /></div></div>
+
+            <button className="btn btn-outline-light mt-2 mx-0 w-25" type="submit" onClick={handleSubmit} disabled={isSubmitting}>
+                    Register
+                  </button>
+        
+        
+        <br />
+        {errors.email && touched.email && errors.email}
+        {errors.password && touched.password && errors.password}
+      </form>
       )}
     </Formik>
+  </div>
+  </div>
+  </div>
   </div>
 ));
 
@@ -68,51 +118,43 @@ function handleForm(email, password, history) {
         im.deauthenticate()
     }
 
-    im.authenticate(email, password).then((authToken) => {
-        console.log("authToken: ", authToken)
-        create_user_session(authToken).then(r => {
-            if (r && !r.userType) {
-              r.userType = 'admin'
-            }
-            history.push("/" + r.userType)
-        }).catch((err) => {
-            alert(err)
-        })
-    }).catch((err) => {
-
-        alert("Unable to login: \n" + err)
-    })
+    register_user(email, password).then((result) => {
+      window.location.href = "/login"
+  }).catch((err) => {
+      console.log("error: ", err)
+  })
 }
 
-function create_user_session(authToken) {
-//   console.log(URL)
-//   return fetch(URL + 'login-user', {
-//     method: 'POST',
-//     mode: 'cors', // no-cors, *cors, same-origin
-//     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-//     // credentials: 'omit', // include, *same-origin, omit
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     referrerPolicy: 'no-referrer', // no-referrer, *client
-//     body: JSON.stringify(authToken) // body data type must match "Content-Type" header
-//   })
-//   .then(r => JSON.parse(r))
-//   .catch(e => console.error("[Login Error]: ", e))
-    return new Promise((resolve, reject) => {
-        var http = new XMLHttpRequest()
-        let sendstring = "authToken=" + authToken
-        http.open("POST", "/login-user", true)
-        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-        http.onreadystatechange = () => {
-            if (http.readyState == 4 && http.status == 204) {
-                resolve()
-            } else if (http.readyState == 4) {
-                reject(http.responseText)
-            }
-        }
-        http.send(sendstring)
-    })
+function register_user(email, password) {
+  return new Promise((resolve, reject) => {
+      generate_registration_token(email).then((orgToken) => {
+          im.register_user(email, password, orgToken).then(() => {
+              resolve()
+          }).catch((err) => {
+              reject(err)
+          })
+      }).catch((err) =>{
+          reject(err)
+      })
+  })
 }
 
-export default;
+function generate_registration_token(email) {
+  return new Promise((resolve, reject) => {
+      var http = new XMLHttpRequest()
+      let sendstring = "email=" + email.toLowerCase()
+      http.open("POST", "/register-org-user", true)
+      http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+      http.onreadystatechange = () => {
+          if (http.readyState == 4 && http.status == 200) {
+              let regToken = http.responseText
+              resolve(regToken)
+          } else if (http.readyState == 4) {
+              reject(http.responseText)
+          }
+      }
+      http.send(sendstring)
+  })
+}
+
+export default RegisterForm;

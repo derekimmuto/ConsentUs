@@ -14,7 +14,10 @@ import immuto from "immuto-backend"
 export const im = immuto.init(true, "https://dev.immuto.io")
 
 const RevokeConsent = (({ studyName }) => (
-    <div>
+    <div className="container-flex gradient-background full-page ">
+    <div className="row center-row">
+    <div className="col-2 col-lg-3">
+    <div className="col-8 col-lg-6 text-center rounded-border m-2">
         <h1>{studyName}</h1>
         <Formik
             initialValues={{
@@ -56,6 +59,9 @@ const RevokeConsent = (({ studyName }) => (
                 </Container>
             )}
         </Formik>
+    </div>
+    </div>
+    </div>
     </div>
 ))
 

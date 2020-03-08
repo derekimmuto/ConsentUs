@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Study from './trial';
-import {Card, Button, List} from 'react-bootstrap'
+import {Card, Button} from 'react-bootstrap'
 
 let URL = "http://consentus.herokuapp.com"
 URL = "http://localhost:8001"

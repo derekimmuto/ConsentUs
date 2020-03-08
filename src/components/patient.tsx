@@ -1,11 +1,32 @@
-import React, {useState, useEffect} from "react"
 import TableView from "./tableView"
 import React from 'react';
 import axios from 'axios';
-import {Card, Button, List} from 'react-bootstrap'
+import {Card, Button} from 'react-bootstrap'
 
 let URL = "http://consentus.herokuapp.com"
 URL = "http://localhost:8001"
+
+const PatientTrial = (props) => {
+    let PatientTrialsInfo = props.props
+
+    let items = []
+    for (let PatientTrialInfo of PatientTrialsInfo) {
+        items.push(
+            <Card key={PatientTrialInfo._id} className="mx-4 mt-3 shadow rounded">
+            <Card.Body>
+                <Card.Title></Card.Title>
+                <Card.Text>
+                    <div>Hi</div>
+                </Card.Text>
+                <Button href="google.com" variant="primary"></Button> 
+            </Card.Body>
+            </Card>
+        )
+    }
+    return (
+        items
+    )
+}
 
 class PatientTrials extends React.Component {
     state = {
@@ -32,26 +53,6 @@ class PatientTrials extends React.Component {
     }
 }
 
-const PatientTrial = (props) => {
-    let PatientTrialsInfo = props.props
 
-    let items = []
-    for (let PatientTrialInfo of PatientTrialsInfo) {
-        items.push(
-            <Card key={PatientTrialInfo._id} className="mx-4">
-            <Card.Body>
-                <Card.Title></Card.Title>
-                <Card.Text>
-                    <p>Filler</p>
-                </Card.Text>
-                <Button href="google.com" variant="primary"></Button> 
-            </Card.Body>
-            </Card>
-        )
-    }
-    return (
-        items
-    )
-}
 
 export default PatientTrials;

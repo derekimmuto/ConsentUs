@@ -23,7 +23,7 @@ class PatientDashboard extends React.Component {
         return (
             <div>
                 <h4>Studies</h4>
-                <Study props={this.state.studies}/>  
+                <Study props={this.state.studies} />  
             </div>
         )
     }
