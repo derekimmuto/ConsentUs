@@ -10,7 +10,7 @@ URL = "http://localhost:8001"
 
 const PatientTrial = ({trials}) => {
     let PatientTrialsInfo = trials
-
+    
     let items = PatientTrialsInfo.map(PatientTrialInfo => 
             <Card key={PatientTrialInfo._id} className="mx-4 mt-3 shadow rounded">
             <Card.Body>
@@ -18,14 +18,14 @@ const PatientTrial = ({trials}) => {
                 <Card.Text>
                     <div>Hi</div>
                 </Card.Text>
-                <Button href="google.com" variant="primary"></Button> 
+                <Button href="/ongoing-consent" variant="primary">View Agreement Information</Button> 
             </Card.Body>
             </Card>
         )
 
     return (
         <>
-            items
+          {items}
         </>
     )
 }
