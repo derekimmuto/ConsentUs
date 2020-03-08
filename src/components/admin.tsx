@@ -3,7 +3,7 @@ import { Link, useRouteMatch, Switch, Route } from "react-router-dom"
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap"
 import AddTrial from "./addTrial"
 
-import TableView from './tableView'
+import TableView from "./tableView"
 
 const Admin = () => {
     const { url, path } = useRouteMatch()
@@ -34,14 +34,26 @@ const Admin = () => {
         <Container className="m-5">
             <Row>
                 <TableView
-                    
-                    title={<div style={{display: "inline-flex"}}>Trials<CellLink to="/admin/add-new-trial">Add a new trial</CellLink></div>}
+                    title={
+                        // <div style={{ display: "inline-flex" }}>
+                        <Container style={{padding: 0}}>
+                            <Row>
+                                <Col className="pull-left">Trials</Col>
+                                <Col className="pull-right">
+                                    <CellLink to="/add-trial">
+                                        Add Trial
+                                    </CellLink>
+                                </Col>
+                            </Row>
+                        </Container>
+                        // </div>
+                    }
                     headings={["Sponsor", "Subjects"]}
                     rows={trials.map(trial => [
                         trial.sponsor,
                         trial.subjects.length
                     ])}
-                    ></TableView>
+                ></TableView>
                 <TableView
                     title="Patients:"
                     headings={["Sponsor", "Subjects"]}
@@ -60,25 +72,13 @@ const Admin = () => {
                     ])}
                 ></TableView>
             </Row>
-            {/* <Row className="mb-5">
-                <Col>
-                    <Card style={{ width: "18rem" }}>
-                        <Card.Body>
-                            <Card.Title>Active Trials</Card.Title>
-                            <Card.Text>{trials.length}</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <CellLink to="/admin/trials">Trials</CellLink>
-                <CellLink to="/admin/patients">Patients</CellLink>
-                <CellLink to="/admin/view-documents">View Documents</CellLink>
-            </Row>
-            <Row>
+            {/* <Row>
                 <Switch>
                     {[
-                        { end: "/add-new-trial", Comp: () => <p>ADD TRIAL!!!!</p> },
+                        {
+                            end: "/add-trial",
+                            Comp: () => <AddTrial></AddTrial>
+                        },
                         { end: "/patients", Comp: () => <p>patients</p> },
                         {
                             end: "/view-document",

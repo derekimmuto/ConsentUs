@@ -20,6 +20,7 @@ import AddTrial from "./components/addTrial"
 import ConfirmConsentGivent from "./components/confirmConsentGiven"
 import immuto from "immuto-backend"
 import Trials from "./components/trials"
+import AddPatient from './components/addPatient'
 
 import homepageBackground from "./assets/homepage.png"
 import homepageLogo from "./assets/homepage_logo.png"
@@ -30,6 +31,7 @@ import "./css/main.css"
 
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css"
+import TrialSuccess from "./components/trialSuccess"
 
 const App = () => {
     const [userType, setUserType] = useState(null)
@@ -110,6 +112,22 @@ const App = () => {
                                 <TopBar redirect={redirect} />
                                 <OurSideNav userType={userType}></OurSideNav>
                                 <AddTrial />
+                            </div>}
+                    </Route>
+                    <Route exact path="/add-patient-to-trial">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <AddPatient />
+                            </div>}
+                    </Route>
+                    <Route exact path="/trial-success">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <TrialSuccess/>
                             </div>}
                     </Route>
                     <Route exact path="/trials">

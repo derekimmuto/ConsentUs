@@ -80,7 +80,7 @@ function handleForm (trialName, documentName, file, sponsor) {
   axios.post("http://localhost:8001/create-trial", data, { 
       })
       .then(res => { // then print response status
-        window.location.href="/admin"
+        window.location.href="/add-patient-to-trial"
       }).catch((err) => {
         console.error(err)
       })

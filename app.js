@@ -160,7 +160,7 @@ app.post("/create-trial", (req, res) => {
         DB.get_user_info(userInfo.email)
         .then(consentusInfo => {
         if (consentusInfo && consentusInfo.userType === "admin") {
-            DB.add_trial(userInfo.email, trialInfo).then(() => {
+            DB.add_trial(trialInfo).then(() => {
                 res.status(204).end()
             }).catch((err) => {
                 console.error(err)
