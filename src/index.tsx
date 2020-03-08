@@ -32,6 +32,7 @@ import "./css/main.css"
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css"
 import TrialSuccess from "./components/trialSuccess"
+import ConsentSuccess from "./components/consentSuccess"
 
 const App = () => {
     const [userType, setUserType] = useState(null)
@@ -128,6 +129,14 @@ const App = () => {
                                 <TopBar redirect={redirect} />
                                 <OurSideNav userType={userType}></OurSideNav>
                                 <TrialSuccess/>
+                            </div>}
+                    </Route>
+                    <Route exact path="/consent_succ">
+                        
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                <ConsentSuccess/>
                             </div>}
                     </Route>
                     <Route exact path="/trials">

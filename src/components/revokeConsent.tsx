@@ -68,7 +68,17 @@ function handleForm() {
         // TODO: revoke patient from database
         //alert("consent revoked, todo: post to database")
     } else {
+<<<<<<< HEAD
         //alert("inadiquate name")
+=======
+        // alert("inadiquate name")
+    }
+}
+
+
+    } else {
+        // alert("inadiquate name")
+>>>>>>> 07bfd48a62496496e476863f2a5c31a4ac1836ec
     }
 }
 
