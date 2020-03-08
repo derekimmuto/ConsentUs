@@ -24,9 +24,7 @@ const RevokeConsent = (({ studyName }) => (
                 fullName: ""
             }}
             onSubmit={(values, { setSubmitting }) => {
-                handleForm(
-                    values.fullName
-                )
+                handleForm()
             }}
         >
             {({
@@ -44,12 +42,13 @@ const RevokeConsent = (({ studyName }) => (
                             <Col>
                                 <label>
                                     <button
-                                        type="Confirm"
+                                        type="submit"
                                         onClick={handleSubmit}
                                         disabled={isSubmitting}
                                     >
                                         Submit
                                     </button>
+                                    <br />
                                     <br />
                                     Are you sure that you want to leave this study?
                                 </label>
@@ -65,7 +64,7 @@ const RevokeConsent = (({ studyName }) => (
     </div>
 ))
 
-function handleForm(fullName) {
+function handleForm() {
     if (true) {
         // TODO: full name is the same as database patient name
         // TODO: revoke patient from database

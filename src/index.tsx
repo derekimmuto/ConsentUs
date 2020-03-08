@@ -93,12 +93,12 @@ const App = () => {
                             </div>
                         )}
                     </Route>
-                    <Route exact path="/patient-viewer">
+                    <Route exact path="/revoke-consent">
                         {() => (
                             <div style={{ marginLeft: 64 }}>
                                 <TopBar redirect={redirect} />
                                 <OurSideNav userType={userType}></OurSideNav>
-                                <PatientViewer />
+                                <RevokeConsent studyName={"MyStudy"}/>
                             </div>
                         )}
                     </Route>
@@ -142,7 +142,11 @@ const App = () => {
                         {() => <ConfirmConsentGivent studyName={"MyStudy"} />}
                     </Route>
                     <Route exact path="/ongoing-consent">
-                        {() => <OngoingConsent studyName={"MyStudy"} />}
+                        {() => <div style={{ marginLeft: 64 }}>
+                                <TopBar redirect={redirect} />
+                                <OurSideNav userType={userType}></OurSideNav>
+                                {<OngoingConsent studyName={"MyStudy"} />}
+                            </div>}
                     </Route>
                 </Switch>
             </div>

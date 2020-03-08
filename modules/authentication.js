@@ -70,6 +70,11 @@ exports.user_logged_in = (req) => {
 }
 
 function get_auth_token(req) {
+    if (req.query) {
+        if (req.query.authToken) {
+            return req.query.authToken 
+        }
+    }
     if (req.body) {
         if (req.body.authToken) {
             return req.body.authToken
@@ -79,11 +84,6 @@ function get_auth_token(req) {
     if (!(utils.is_empty(cookies))) {
         if (cookies.authToken) {
             return cookies.authToken
-        }
-    }
-    if (req.query) {
-        if (req.query.authToken) {
-            return req.query.authToken 
         }
     }
     return undefined
