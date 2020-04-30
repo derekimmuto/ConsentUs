@@ -34,7 +34,7 @@
     "express-fileupload": "^1.1.6",
     "formik": "^2.1.4",
     "immuto-backend": "^0.1.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mongodb": "^3.5.4",
     "popper.js": "^1.16.1",
     "react": "^16.13.0",
